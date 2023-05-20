@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
@@ -30,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Gaps.v20,
+              Gaps.v14,
               Text(
                 "Manage your account, check notifications, comment on videos, and more.",
                 style: TextStyle(
@@ -40,9 +41,19 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(text: "Use Phone or Email"),
-              Gaps.v20,
-              AuthButton(text: "Continue with Apple"),
+              AuthButton(
+                text: "Use Email & Password",
+                icon: FaIcon(
+                  FontAwesomeIcons.user,
+                ),
+              ),
+              Gaps.v16,
+              AuthButton(
+                text: "Continue with Apple",
+                icon: FaIcon(
+                  FontAwesomeIcons.apple,
+                ),
+              ),
             ],
           ),
         ),
