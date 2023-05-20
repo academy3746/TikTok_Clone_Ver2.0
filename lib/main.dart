@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok/screens/sign_up/sign_up_screens.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -16,7 +17,7 @@ class TikTokApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity
       ),
       debugShowCheckedModeBanner: false,
-      home: Container(),
+      home: const SignUpScreen(),
     );
   }
 }
