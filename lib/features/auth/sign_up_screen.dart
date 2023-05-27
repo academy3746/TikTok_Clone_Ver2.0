@@ -3,11 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/auth_button.dart';
-import 'package:tiktok/features/auth/email_screen.dart';
+import 'package:tiktok/features/auth/username_screen.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+
+  // Under score in front of properties means private in dart
 
   void _onLoginTap(BuildContext context) {
     Navigator.of(context).push(
@@ -20,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => const UsernameScreen(),
       ),
     );
   }
