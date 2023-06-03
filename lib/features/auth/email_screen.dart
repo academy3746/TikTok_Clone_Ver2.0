@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
@@ -58,6 +59,10 @@ class _EmailScreenState extends State<EmailScreen> {
         ));
   }
 
+  void _onClearTap() {
+    _emailController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -92,6 +97,14 @@ class _EmailScreenState extends State<EmailScreen> {
                 decoration: InputDecoration(
                   hintText: "E-mail",
                   errorText: _isEmailValid(),
+                  suffix: GestureDetector(
+                    onTap: _onClearTap,
+                    child: FaIcon(
+                      FontAwesomeIcons.solidCircleXmark,
+                      color: Colors.grey.shade500,
+                      size: Sizes.size20,
+                    ),
+                  ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -105,7 +118,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 ),
                 cursorColor: Theme.of(context).primaryColor,
               ),
-              Gaps.v16,
+              Gaps.v28,
               GestureDetector(
                 onTap: _onSubmit,
                 child: FormButton(
