@@ -48,10 +48,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
   void _onSubmit() {
     if (!_isPasswordValid()) return;
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const BirthdayScreen(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BirthdayScreen(),
+      ),
+    );
   }
 
   void _onClearTap() {
@@ -146,7 +147,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   FaIcon(
                     FontAwesomeIcons.circleCheck,
                     size: Sizes.size20,
-                    color: _isPasswordValid() ? Colors.blue : Colors.grey.shade400,
+                    color:
+                        _isPasswordValid() ? Colors.blue : Colors.grey.shade400,
                   ),
                   Gaps.h5,
                   const Text("8 to 20 characters"),
