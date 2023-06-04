@@ -6,6 +6,7 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
 
 import '../../constants/sizes.dart';
+import '../onboarding/interest_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -31,6 +32,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         // validate method returns true or false.
         _formKey.currentState!.save();
         print(formData);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InterestScreen(),
+          ),
+        );
       }
     }
     //_formKey.currentState?.validate();
@@ -75,6 +81,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   validator: (value) {
                     // Fake Validation
                     //return "Prohibited E-mail address";
+                    if (value != null && value.isEmpty) {
+                      return "Please, write your E-mail address.";
+                    }
                     return null;
                   },
                   onSaved: (newValue) {
@@ -112,6 +121,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   validator: (value) {
                     // Fake Validation
                     //return "Wrong Password";
+                    if (value != null && value.isEmpty) {
+                      return "Please, write your password.";
+                    }
                     return null;
                   },
                   onSaved: (newValue) {
