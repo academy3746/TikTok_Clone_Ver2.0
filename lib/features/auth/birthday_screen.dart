@@ -32,10 +32,12 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
+      // 중첩된 이전 화면들을 스택에서 삭제
       MaterialPageRoute(
         builder: (context) => const InterestScreen(),
       ),
+      (route) => false,
     );
   }
 

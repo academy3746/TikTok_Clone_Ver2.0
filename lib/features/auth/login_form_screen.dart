@@ -18,7 +18,7 @@ class LoginFormScreen extends StatefulWidget {
 class _LoginFormScreenState extends State<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Map<String, String> formData= {};
+  Map<String, String> formData = {};
 
   bool _obscureText = true;
 
@@ -31,11 +31,17 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       if (_formKey.currentState!.validate()) {
         // validate method returns true or false.
         _formKey.currentState!.save();
-        print(formData);
-        Navigator.of(context).push(
+        //print(formData);
+        Navigator.of(context).pushAndRemoveUntil(
+          // 중첩된 이전 화면들을 스택에서 삭제
           MaterialPageRoute(
             builder: (context) => const InterestScreen(),
           ),
+          (route) => false,
+          /*(route) {
+            print(route);
+            return false;
+            }*/
         );
       }
     }
