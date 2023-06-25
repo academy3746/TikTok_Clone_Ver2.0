@@ -40,52 +40,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onTap,
-        currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTap,
+        destinations: const [
+          NavigationDestination(
             icon: FaIcon(
               FontAwesomeIcons.house,
+              color: Colors.white,
             ),
             label: "Home",
-            tooltip: "Who are you?",
-            backgroundColor: Colors.amber,
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: FaIcon(
               FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
             ),
             label: "Search",
-            tooltip: "What the fuck?",
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.house,
-            ),
-            label: "Home",
-            tooltip: "Who are you?",
-            backgroundColor: Colors.pink,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-            ),
-            label: "Search",
-            tooltip: "What the fuck?",
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.house,
-            ),
-            label: "Home",
-            tooltip: "Who are you?",
-            backgroundColor: Colors.grey,
           ),
         ],
-        //selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
   }
