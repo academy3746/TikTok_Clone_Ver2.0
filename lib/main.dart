@@ -28,7 +28,7 @@ class TikTokApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       home: const MainNavigationScreen(),
     );
   }
