@@ -20,9 +20,16 @@ class VideoPostScreen extends StatefulWidget {
   State<VideoPostScreen> createState() => _VideoPostScreenState();
 }
 
-class _VideoPostScreenState extends State<VideoPostScreen> {
+class _VideoPostScreenState extends State<VideoPostScreen>
+    with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video01.mp4");
+
+  bool _isPaused = false;
+
+  final Duration _animationDuration = const Duration(milliseconds: 300);
+
+  late final AnimationController _animationController;
 
   void _onVideoFinished() {
     if (_videoPlayerController.value.isInitialized) {
@@ -44,6 +51,17 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
   void initState() {
     super.initState();
     _initVideoPlayer();
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 1.0,
+      upperBound: 1.5,
+      value: 1.5,
+      duration: _animationDuration,
+    );
+    _animationController.addListener(() {
+      //print(_animationController.value);
+      setState(() {});
+    });
   }
 
   @override
@@ -54,8 +72,7 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    print("Video: #${widget.index} is ${info.visibleFraction * 100} visible.");
-
+    //print("Video: #${widget.index} is ${info.visibleFraction * 100} visible.");
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
@@ -64,13 +81,20 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      _animationController.forward();
     }
+
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    //print(_animationController.value);
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -88,13 +112,20 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
               onTap: _onTogglePause,
             ),
           ),
-          const Positioned.fill(
+          Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.white,
-                  size: Sizes.size52,
+                child: Transform.scale(
+                  scale: _animationController.value,
+                  child: AnimatedOpacity(
+                    opacity: _isPaused ? 1 : 0,
+                    duration: _animationDuration,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size52,
+                    ),
+                  ),
                 ),
               ),
             ),
