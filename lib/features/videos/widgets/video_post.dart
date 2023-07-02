@@ -22,6 +22,8 @@ class VideoPostScreen extends StatefulWidget {
 
 class _VideoPostScreenState extends State<VideoPostScreen>
     with SingleTickerProviderStateMixin {
+  /// 1. [with] SingleTickerProviderStateMixin: SingleTickerProviderStateMixin 클래스를 통째로 복사할 것이다.
+  /// 2. Provides a single Ticker that is configured to only tick while the current tree is enabled, as defined by TickerMode.
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video01.mp4");
 
@@ -52,6 +54,8 @@ class _VideoPostScreenState extends State<VideoPostScreen>
     super.initState();
     _initVideoPlayer();
     _animationController = AnimationController(
+      /// 1. vsync: 위젯이 보이지 않을 때는 애니메이션을 작동하지 않도록 할 것.. 위젯의 경제성 향상, 프레임 드랍 방지 및 리소스 절약
+      /// 2. 반드시 SingleTickerProviderStateMixin 클래스와 같이 써야 한다.
       vsync: this,
       lowerBound: 1.0,
       upperBound: 1.5,
@@ -123,7 +127,8 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                   builder: (BuildContext context, Widget? child) {
                     return Transform.scale(
                       scale: _animationController.value,
-                      child: child, /// This child is AnimatedOpacity
+                      /// This child is AnimatedOpacity
+                      child: child,
                     );
                   },
                   //child: Transform.scale(
