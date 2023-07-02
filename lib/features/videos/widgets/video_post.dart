@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -34,16 +36,19 @@ class _VideoPostScreenState extends State<VideoPostScreen>
   late final AnimationController _animationController;
 
   void _onVideoFinished() {
-    if (_videoPlayerController.value.isInitialized) {
+    /// 다음 비디오로 넘어가지 말고 현재 화면에 머무를 것..
+    return;
+    /*if (_videoPlayerController.value.isInitialized) {
       if (_videoPlayerController.value.duration ==
           _videoPlayerController.value.position) {
         widget.onVideoFinished();
       }
-    }
+    }*/
   }
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
     //_videoPlayerController.play();
     setState(() {});
     _videoPlayerController.addListener(_onVideoFinished);
@@ -127,6 +132,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                   builder: (BuildContext context, Widget? child) {
                     return Transform.scale(
                       scale: _animationController.value,
+
                       /// This child is AnimatedOpacity
                       child: child,
                     );
@@ -145,6 +151,62 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                   //),
                 ),
               ),
+            ),
+          ),
+          const Positioned(
+            bottom: 20,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "@DIO",
+                  style: TextStyle(
+                    fontSize: Sizes.size20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                Text(
+                  "Let me praise God Saehee!!!",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Positioned(
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                      "https://avatars.githubusercontent.com/u/107133642"),
+                  child: Text("DIO"),
+                ),
+                Gaps.v16,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                ),
+              ],
             ),
           ),
         ],
