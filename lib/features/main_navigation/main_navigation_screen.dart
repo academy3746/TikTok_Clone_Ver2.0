@@ -4,6 +4,7 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -14,50 +15,6 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
-
-  // Debug
-  final screens = [
-    const Center(
-      child: Text(
-        "HOME",
-        style: TextStyle(
-          fontSize: 49,
-        ),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "DISCOVER",
-        style: TextStyle(
-          fontSize: 49,
-        ),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "UPLOAD",
-        style: TextStyle(
-          fontSize: 49,
-        ),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "INBOX",
-        style: TextStyle(
-          fontSize: 49,
-        ),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "PROFILE",
-        style: TextStyle(
-          fontSize: 49,
-        ),
-      ),
-    ),
-  ];
 
   void _onTap(int index) {
     setState(() {
@@ -85,7 +42,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // body: screens[_selectedIndex],
-      body: screens.elementAt(_selectedIndex),
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const VideoTimelineScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: Container(),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
