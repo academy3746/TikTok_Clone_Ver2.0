@@ -47,16 +47,33 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() async {
+    /// Fake Indicator (원래는 API를 받아야 함...)
+    return Future.delayed(
+      const Duration(
+        seconds: 3,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: _pageController,
-      itemCount: _itemCount,
-      onPageChanged: _onPageChanged,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (BuildContext context, int index) => VideoPostScreen(
-        onVideoFinished: _onVideoFinished,
-        index: index,
+    return RefreshIndicator(
+      /// The distance from the child's top or bottom edgeOffset where the refresh indicator will settle.
+      displacement: 50,
+      /// The offset where RefreshProgressIndicator starts to appear on drag start.
+      edgeOffset: 20,
+      color: Theme.of(context).primaryColor,
+      onRefresh: _onRefresh,
+      child: PageView.builder(
+        controller: _pageController,
+        itemCount: _itemCount,
+        onPageChanged: _onPageChanged,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (BuildContext context, int index) => VideoPostScreen(
+          onVideoFinished: _onVideoFinished,
+          index: index,
+        ),
       ),
     );
   }
