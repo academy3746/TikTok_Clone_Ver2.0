@@ -58,10 +58,12 @@ class _VideoPostScreenState extends State<VideoPostScreen>
       value: 1.5,
       duration: _animationDuration,
     );
-    _animationController.addListener(() {
+
+    /// 1안: Event Listener 등록 & Set State Build Method
+    /*_animationController.addListener(() {
       //print(_animationController.value);
       setState(() {});
-    });
+    });*/
   }
 
   @override
@@ -115,8 +117,17 @@ class _VideoPostScreenState extends State<VideoPostScreen>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                /// 2안: Use AnimatedBuilder Widget
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (BuildContext context, Widget? child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child, /// This child is AnimatedOpacity
+                    );
+                  },
+                  //child: Transform.scale(
+                  //scale: _animationController.value,
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
@@ -126,6 +137,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                       size: Sizes.size52,
                     ),
                   ),
+                  //),
                 ),
               ),
             ),
