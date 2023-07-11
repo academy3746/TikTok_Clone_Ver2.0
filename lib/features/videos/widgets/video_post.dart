@@ -205,7 +205,8 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/107133642"),
+                    "https://avatars.githubusercontent.com/u/107133642",
+                  ),
                   child: Text("DIO"),
                 ),
                 Gaps.v16,
