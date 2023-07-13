@@ -90,6 +90,11 @@ class _VideoPostScreenState extends State<VideoPostScreen>
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+
+    // 탭 이동 시에는 비디오 일시정지: 스로틀링 방지
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _onTogglePause() {
