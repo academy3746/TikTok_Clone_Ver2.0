@@ -1,21 +1,139 @@
+// ignore_for_file: avoid_print
+
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
-final tabs = ["Top", "Users", "Videos", "Sounds", "LIVE", "Shopping", "Brands"];
+final tabs = [
+  "Top",
+  "Users",
+  "Videos",
+  "Sounds",
+  "LIVE",
+  "Shopping",
+  "Brands",
+];
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
+
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final TextEditingController _textEditingController = TextEditingController(
+    text: "AI Schoolgirl",
+  );
+  bool _isWriting = false;
+
+  /*void _onSearchChanged(String value) {
+    print("Searching for $value");
+  }
+
+  void _onSearchSubmitted(String value) {
+    print("$value has submitted.");
+  }*/
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  void _startWriting() {
+    setState(() {
+      _isWriting = true;
+    });
+  }
+
+  void _stopWriting() {
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _textEditingController.clear();
+      _isWriting = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: const Text("Discover"),
+          title: /*CupertinoSearchTextField(
+            controller: _textEditingController,
+            onChanged: _onSearchChanged,
+            onSubmitted: _onSearchSubmitted,
+          ),*/
+              SizedBox(
+            height: Sizes.size36,
+            child: TextField(
+              controller: _textEditingController,
+              onTap: _startWriting,
+              expands: true,
+              minLines: null,
+              maxLines: null,
+              textInputAction: TextInputAction.newline,
+              cursorColor: Theme.of(context).primaryColor,
+              decoration: InputDecoration(
+                hintText: "Search",
+                hintStyle: TextStyle(
+                  fontSize: Sizes.size16,
+                  color: Colors.grey.shade500,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size6,
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size10,
+                ),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    left: Sizes.size8,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.magnifyingGlass,
+                        color: Colors.grey.shade500,
+                        size: Sizes.size16 + Sizes.size2,
+                      ),
+                    ],
+                  ),
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                    right: Sizes.size8,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_isWriting)
+                        GestureDetector(
+                          onTap: _stopWriting,
+                          child: FaIcon(
+                            FontAwesomeIcons.solidCircleXmark,
+                            color: Colors.grey.shade500,
+                            size: Sizes.size16 + Sizes.size2,
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
             padding: const EdgeInsets.symmetric(
@@ -40,6 +158,8 @@ class DiscoverScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             GridView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 itemCount: 20,
                 padding: const EdgeInsets.all(
                   Sizes.size6,
@@ -52,13 +172,21 @@ class DiscoverScreen extends StatelessWidget {
                 ),
                 itemBuilder: (BuildContext context, int index) => Column(
                       children: [
-                        AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: FadeInImage.assetNetwork(
-                            fit: BoxFit.cover,
-                            placeholder: "assets/images/shogun.webp",
-                            image:
-                                "https://ac-p1.namu.la/20230417sac/1cd216f5235d5ae6f8f3c88ae811186140600ea9d47201bc5a1ec4a501639267.png?expires=1689252525&key=-R2DBoGvRXPsUhIpRYb3hQ",
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Sizes.size4,
+                            ),
+                          ),
+                          clipBehavior: Clip.hardEdge,
+                          child: AspectRatio(
+                            aspectRatio: 9 / 16,
+                            child: FadeInImage.assetNetwork(
+                              fit: BoxFit.cover,
+                              placeholder: "assets/images/shogun.webp",
+                              image:
+                                  "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
+                            ),
                           ),
                         ),
                         Gaps.v10,
