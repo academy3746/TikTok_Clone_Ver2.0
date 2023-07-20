@@ -195,7 +195,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: Sizes.size18,
+                            fontSize: Sizes.size16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -216,7 +216,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               Gaps.h4,
                               const Expanded(
                                 child: Text(
-                                  "One for the money, one for the show! round & round & round we go!",
+                                  "Ronnie James DIO",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),

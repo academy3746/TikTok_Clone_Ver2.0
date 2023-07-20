@@ -9,6 +9,14 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Settings"),
       ),
+      body: ListView(
+        children: const [
+          AboutListTile(
+            applicationVersion: "1.0",
+            applicationLegalese: "All rights reserved by Jonghyun Lee.",
+          ),
+        ],
+      ),
     );
   }
 }
