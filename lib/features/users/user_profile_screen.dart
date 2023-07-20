@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/features/settings/settings_screen.dart';
 import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
 
 import '../../constants/sizes.dart';
@@ -13,6 +14,14 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  void _onGearPressed() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +34,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 title: const Text("DIO"),
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: _onGearPressed,
                     icon: const FaIcon(
                       FontAwesomeIcons.gear,
                       size: Sizes.size20,
@@ -230,7 +239,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   keyboardDismissBehavior:
-                  ScrollViewKeyboardDismissBehavior.onDrag,
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   itemCount: 20,
                   padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -240,18 +249,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     mainAxisSpacing: Sizes.size2,
                   ),
                   itemBuilder: (BuildContext context, int index) => Column(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 9 / 14,
-                        child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: "assets/images/shogun.webp",
-                          image:
-                          "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
-                        ),
-                      ),
-                    ],
-                  )),
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 9 / 14,
+                            child: FadeInImage.assetNetwork(
+                              fit: BoxFit.cover,
+                              placeholder: "assets/images/shogun.webp",
+                              image:
+                                  "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
+                            ),
+                          ),
+                        ],
+                      )),
             ],
           ),
         ),
