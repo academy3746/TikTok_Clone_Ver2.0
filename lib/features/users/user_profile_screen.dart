@@ -203,6 +203,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           body: TabBarView(
             children: [
               GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
                   itemCount: 20,
@@ -210,8 +211,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 9 / 14,
                     crossAxisCount: 3,
-                    crossAxisSpacing: Sizes.size5,
-                    mainAxisSpacing: Sizes.size5,
+                    crossAxisSpacing: Sizes.size2,
+                    mainAxisSpacing: Sizes.size2,
                   ),
                   itemBuilder: (BuildContext context, int index) => Column(
                         children: [
@@ -226,6 +227,31 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                         ],
                       )),
+              GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  keyboardDismissBehavior:
+                  ScrollViewKeyboardDismissBehavior.onDrag,
+                  itemCount: 20,
+                  padding: EdgeInsets.zero,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 9 / 14,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: Sizes.size2,
+                    mainAxisSpacing: Sizes.size2,
+                  ),
+                  itemBuilder: (BuildContext context, int index) => Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 9 / 14,
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder: "assets/images/shogun.webp",
+                          image:
+                          "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         ),

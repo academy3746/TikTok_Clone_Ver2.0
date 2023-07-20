@@ -85,6 +85,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     //print("Video: #${widget.index} is ${info.visibleFraction * 100} visible.");
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         _isPaused &&
         !_videoPlayerController.value.isPlaying) {
