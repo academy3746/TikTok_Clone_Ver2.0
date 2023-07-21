@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,9 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _onSwitchInfo(bool? value2) {
     if (value2 == null) return;
-      setState(() {
-        _showInfo = value2;
-      });
+    setState(() {
+      _showInfo = value2;
+    });
   }
 
   @override
@@ -57,6 +59,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const AboutListTile(
             applicationVersion: "1.0",
             applicationLegalese: "All rights reserved by Jonghyun Lee.",
+          ),
+          ListTile(
+            title: const Text("Logout (IOS)"),
+            textColor: Theme.of(context).primaryColor,
+            onTap: () {
+              showCupertinoDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  title: const Text("Are you sure?"),
+                  content: const Text("Please, do not leave us~!"),
+                  actions: [
+                    CupertinoDialogAction(
+                      child: const Text("NO"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    CupertinoDialogAction(
+                      isDestructiveAction: true,
+                      child: const Text("YES"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text("Logout (AOS)"),
+            textColor: Colors.blue,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Are you sure?"),
+                  content: const Text("Please, do not leave us~!"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text("NO"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text("YES"),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
