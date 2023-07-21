@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:tiktok/features/auth/sign_up_screen.dart';
 import 'constants/sizes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// This is the glue that binds the framework to the Flutter engine.
+
+  /// 앱 세로화면 고정 모드
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  /// 화면마다 다르게 적용가능
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.light,
+  );
+
   runApp(const TikTokApp());
 }
 
@@ -31,8 +44,8 @@ class TikTokApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      debugShowCheckedModeBanner: true,
-      home: const MainNavigationScreen(),
+      debugShowCheckedModeBanner: false,
+      home: const SignUpScreen(),
     );
   }
 }
