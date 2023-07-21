@@ -70,63 +70,68 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           elevation: 1,
           title: SizedBox(
             height: Sizes.size36,
-            child: TextField(
-              controller: _textEditingController,
-              onTap: _startWriting,
-              expands: true,
-              minLines: null,
-              maxLines: null,
-              textInputAction: TextInputAction.newline,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                hintText: "Search",
-                hintStyle: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.grey.shade500,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    Sizes.size6,
+            child: ConstrainedBox( /// Container 안에 ConstrainedBox를 담을 필요는 없음
+              constraints: const BoxConstraints(
+                maxWidth: Breakpoints.sm,
+              ),
+              child: TextField(
+                controller: _textEditingController,
+                onTap: _startWriting,
+                expands: true,
+                minLines: null,
+                maxLines: null,
+                textInputAction: TextInputAction.newline,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  hintStyle: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.grey.shade500,
                   ),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey.shade100,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size10,
-                ),
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(
-                    left: Sizes.size8,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      Sizes.size6,
+                    ),
+                    borderSide: BorderSide.none,
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.magnifyingGlass,
-                        color: Colors.grey.shade500,
-                        size: Sizes.size16 + Sizes.size2,
-                      ),
-                    ],
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: Sizes.size10,
                   ),
-                ),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(
-                    right: Sizes.size8,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size8,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.magnifyingGlass,
+                          color: Colors.grey.shade500,
+                          size: Sizes.size16 + Sizes.size2,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (_isWriting)
-                        GestureDetector(
-                          onTap: _stopWriting,
-                          child: FaIcon(
-                            FontAwesomeIcons.solidCircleXmark,
-                            color: Colors.grey.shade500,
-                            size: Sizes.size16 + Sizes.size2,
-                          ),
-                        )
-                    ],
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(
+                      right: Sizes.size8,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_isWriting)
+                          GestureDetector(
+                            onTap: _stopWriting,
+                            child: FaIcon(
+                              FontAwesomeIcons.solidCircleXmark,
+                              color: Colors.grey.shade500,
+                              size: Sizes.size16 + Sizes.size2,
+                            ),
+                          )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -168,7 +173,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               ),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 9 / 20,
-                crossAxisCount: width > Breakpoints.md ? 5 : 2,
+                crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: Sizes.size10,
               ),
@@ -205,7 +210,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       ),
                       Gaps.v8,
                       if (constraints.maxWidth < 200 ||
-                          constraints.maxWidth > 250)
+                          constraints.maxWidth > 350)
                         DefaultTextStyle(
                           style: TextStyle(
                             color: Colors.grey.shade600,
