@@ -161,48 +161,51 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         body: TabBarView(
           children: [
             GridView.builder(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: 20,
-                padding: const EdgeInsets.all(
-                  Sizes.size6,
-                ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 9 / 20,
-                  crossAxisCount: width > Breakpoints.lg ? 4 : 2,
-                  crossAxisSpacing: Sizes.size10,
-                  mainAxisSpacing: Sizes.size10,
-                ),
-                itemBuilder: (BuildContext context, int index) => Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              Sizes.size4,
-                            ),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          child: AspectRatio(
-                            aspectRatio: 9 / 16,
-                            child: FadeInImage.assetNetwork(
-                              fit: BoxFit.cover,
-                              placeholder: "assets/images/shogun.webp",
-                              image:
-                                  "https://i1.ruliweb.com/ori/23/02/09/18633a446364d1021.png",
-                            ),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              itemCount: 20,
+              padding: const EdgeInsets.all(
+                Sizes.size6,
+              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 9 / 20,
+                crossAxisCount: width > Breakpoints.md ? 5 : 2,
+                crossAxisSpacing: Sizes.size10,
+                mainAxisSpacing: Sizes.size10,
+              ),
+              itemBuilder: (BuildContext context, int index) => LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            Sizes.size4,
                           ),
                         ),
-                        Gaps.v10,
-                        const Text(
-                          "Ride the tiger! you can see his stripes but you know he's clean.",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: Sizes.size16,
-                            fontWeight: FontWeight.bold,
+                        clipBehavior: Clip.hardEdge,
+                        child: AspectRatio(
+                          aspectRatio: 9 / 16,
+                          child: FadeInImage.assetNetwork(
+                            fit: BoxFit.cover,
+                            placeholder: "assets/images/shogun.webp",
+                            image:
+                                "https://i1.ruliweb.com/ori/23/02/09/18633a446364d1021.png",
                           ),
                         ),
-                        Gaps.v8,
+                      ),
+                      Gaps.v10,
+                      const Text(
+                        "Ride the tiger! you can see his stripes but you know he's clean.",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: Sizes.size14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Gaps.v8,
+                      if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 250)
                         DefaultTextStyle(
                           style: TextStyle(
                             color: Colors.grey.shade600,
@@ -227,7 +230,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                               Gaps.h4,
                               FaIcon(
                                 FontAwesomeIcons.heart,
-                                size: Sizes.size16,
+                                size: Sizes.size14,
                                 color: Colors.grey.shade600,
                               ),
                               Gaps.h2,
@@ -237,8 +240,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                             ],
                           ),
                         ),
-                      ],
-                    )),
+                    ],
+                  );
+                },
+              ),
+            ),
             for (var tab in tabs.skip(1))
               Center(
                 child: Text(
