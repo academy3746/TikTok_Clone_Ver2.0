@@ -231,7 +231,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               fit: BoxFit.cover,
                               placeholder: "assets/images/shogun.webp",
                               image:
-                                  "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
+                                  "https://i1.ruliweb.com/ori/23/02/09/18633a446364d1021.png",
                             ),
                           ),
                         ],

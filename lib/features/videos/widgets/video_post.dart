@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
@@ -31,6 +32,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
       VideoPlayerController.asset("assets/videos/video01.mp4");
 
   bool _isPaused = false;
+  bool _isMuted = false;
 
   final Duration _animationDuration = const Duration(milliseconds: 300);
 
@@ -51,8 +53,24 @@ class _VideoPostScreenState extends State<VideoPostScreen>
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     //_videoPlayerController.play();
-    setState(() {});
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
     _videoPlayerController.addListener(_onVideoFinished);
+    setState(() {});
+  }
+
+  _onVolumeTap() {
+    _isMuted = !_isMuted;
+    print(_isMuted ? 'Mute Mode' : 'Sound display on');
+    if (_isMuted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(75);
+    }
+    setState(
+      () {},
+    );
   }
 
   @override
@@ -214,6 +232,14 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                     "https://avatars.githubusercontent.com/u/107133642",
                   ),
                   child: Text("DIO"),
+                ),
+                Gaps.v16,
+                GestureDetector(
+                  child: VideoButton(
+                    icon: _isMuted ? FontAwesomeIcons.volumeXmark : FontAwesomeIcons.volumeHigh,
+                    text: _isMuted ? "OFF" : "ON",
+                  ),
+                  onTap: () => _onVolumeTap(),
                 ),
                 Gaps.v16,
                 const VideoButton(
