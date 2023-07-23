@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/braekpoints.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/settings/settings_screen.dart';
 import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
@@ -24,6 +25,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -111,10 +114,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                               ),
                               Gaps.v3,
-                              Text(
-                                "Followers",
-                                style: TextStyle(
-                                  color: Colors.grey.shade500,
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: Breakpoints.sm,
+                                ),
+                                child: Text(
+                                  "Followers",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -217,9 +225,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ScrollViewKeyboardDismissBehavior.onDrag,
                   itemCount: 20,
                   padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 9 / 14,
-                    crossAxisCount: 3,
+                    crossAxisCount: width > Breakpoints.lg ? 6 : 3,
                     crossAxisSpacing: Sizes.size2,
                     mainAxisSpacing: Sizes.size2,
                   ),
