@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_print
 
 // import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/braekpoints.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+
+import '../../utility.dart';
 
 final tabs = [
   "Top",
@@ -25,18 +28,16 @@ class DiscoverScreen extends StatefulWidget {
 }
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
-  final TextEditingController _textEditingController = TextEditingController(
-    text: "AI Schoolgirl",
-  );
-  bool _isWriting = false;
+  final TextEditingController _textEditingController = TextEditingController();
+  //bool _isWriting = false;
 
-  /*void _onSearchChanged(String value) {
+  void _onSearchChanged(String value) {
     print("Searching for $value");
   }
 
   void _onSearchSubmitted(String value) {
     print("$value has submitted.");
-  }*/
+  }
 
   @override
   void dispose() {
@@ -44,7 +45,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     super.dispose();
   }
 
-  void _startWriting() {
+  /*void _startWriting() {
     setState(() {
       _isWriting = true;
     });
@@ -56,7 +57,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       _textEditingController.clear();
       _isWriting = false;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -74,73 +75,76 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               constraints: const BoxConstraints(
                 maxWidth: Breakpoints.sm,
               ),
-              child: TextField(
+              child: CupertinoSearchTextField(
                 controller: _textEditingController,
-                onTap: _startWriting,
-                expands: true,
-                minLines: null,
-                maxLines: null,
-                textInputAction: TextInputAction.newline,
-                cursorColor: Theme.of(context).primaryColor,
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  hintStyle: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.grey.shade500,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Sizes.size6,
-                    ),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: Sizes.size10,
-                  ),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(
-                      left: Sizes.size8,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.magnifyingGlass,
-                          color: Colors.grey.shade500,
-                          size: Sizes.size16 + Sizes.size2,
-                        ),
-                      ],
-                    ),
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(
-                      right: Sizes.size8,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_isWriting)
-                          GestureDetector(
-                            onTap: _stopWriting,
-                            child: FaIcon(
-                              FontAwesomeIcons.solidCircleXmark,
-                              color: Colors.grey.shade500,
-                              size: Sizes.size16 + Sizes.size2,
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
+                onChanged: _onSearchChanged,
+                onSubmitted: _onSearchSubmitted,
+                style: TextStyle(
+                  color: isDarkMode(context) ? Colors.white : Colors.black,
                 ),
               ),
             ),
           ),
-          /*CupertinoSearchTextField(
+          /*TextField(
             controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
+            onTap: _startWriting,
+            expands: true,
+            minLines: null,
+            maxLines: null,
+            textInputAction: TextInputAction.newline,
+            cursorColor: Theme.of(context).primaryColor,
+            decoration: InputDecoration(
+              hintText: "Search",
+              hintStyle: TextStyle(
+                fontSize: Sizes.size16,
+                color: Colors.grey.shade500,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Sizes.size6,
+                ),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade100,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size10,
+              ),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(
+                  left: Sizes.size8,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.grey.shade500,
+                      size: Sizes.size16 + Sizes.size2,
+                    ),
+                  ],
+                ),
+              ),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(
+                  right: Sizes.size8,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_isWriting)
+                      GestureDetector(
+                        onTap: _stopWriting,
+                        child: FaIcon(
+                          FontAwesomeIcons.solidCircleXmark,
+                          color: Colors.grey.shade500,
+                          size: Sizes.size16 + Sizes.size2,
+                        ),
+                      )
+                  ],
+                ),
+              ),
+            ),
           ),*/
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
@@ -152,9 +156,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size16,
             ),
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
+            indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
+            labelColor: Theme.of(context).tabBarTheme.labelColor,
+            unselectedLabelColor: Theme.of(context).tabBarTheme.unselectedLabelColor,
             tabs: [
               for (var tab in tabs)
                 Tab(
@@ -209,11 +213,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         ),
                       ),
                       Gaps.v8,
-                      if (constraints.maxWidth < 200 ||
-                          constraints.maxWidth > 350)
+                      /*if (constraints.maxWidth < 200 ||
+                          constraints.maxWidth > 350)*/
                         DefaultTextStyle(
                           style: TextStyle(
-                            color: Colors.grey.shade600,
+                            color: isDarkMode(context) ? Colors.grey.shade300 : Colors.grey.shade600,
                             fontWeight: FontWeight.w600,
                           ),
                           child: Row(
