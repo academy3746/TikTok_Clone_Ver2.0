@@ -6,6 +6,7 @@ import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
+import '../../utility.dart';
 
 enum Direction { right, left }
 
@@ -118,6 +119,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+          color: isDarkMode(context) ? Colors.black : Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(
               Sizes.size24,
