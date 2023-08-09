@@ -48,7 +48,6 @@ class TikTokApp extends StatelessWidget {
           ),
         ),
         tabBarTheme: TabBarTheme(
-          indicatorColor: Colors.black,
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey.shade500,
         ),
