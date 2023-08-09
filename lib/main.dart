@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok/features/auth/sign_up_screen.dart';
-import 'package:tiktok/features/settings/settings_screen.dart';
 import 'constants/sizes.dart';
 
 void main() async {
