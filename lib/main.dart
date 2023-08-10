@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok/features/auth/sign_up_screen.dart';
 import 'constants/sizes.dart';
+import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,10 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       title: 'TikTok Clone',
       localizationsDelegates: const [
+        // Customized
+        AppLocalizations.delegate,
+
+        // Default
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
