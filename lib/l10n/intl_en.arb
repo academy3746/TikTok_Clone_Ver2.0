@@ -1,0 +1,15 @@
+{
+  "signUpTitle": "Sign up for TikTok",
+  "signUpContents": "Create a profile, follow other accounts, make your own videos, and more.",
+  "emailForm": "Use Email & Password",
+  "continueWithApple": "Continue with Apple",
+  "havaAccount": "Already have an account?",
+  "login": "Log in!",
+
+  "loginTitle": "Log in to TikTok",
+  "loginContents": "Manage your account, check notifications, comment on videos, and more.",
+  "loginWithEmail": "Use Email & Password",
+  "loginWithApple": "Continue with Apple",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign up!"
+}

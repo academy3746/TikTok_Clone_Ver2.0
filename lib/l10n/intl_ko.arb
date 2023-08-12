@@ -1,0 +1,15 @@
+{
+  "signUpTitle": "TikTok 회원가입",
+  "signUpContents": "나만의 특별한 동영상을 만들고 싶으신가요? 지금 바로 가입 하세요!",
+  "emailForm": "이메일 주소로 가입하기",
+  "continueWithApple": "Apple 계정으로 가입하기",
+  "havaAccount": "이미 계정이 있으신가요?",
+  "login": "로그인 하세요!",
+
+  "loginTitle": "TikTok 로그인",
+  "loginContents": "TikTok 회원이신가요? 로그인 하세요!",
+  "loginWithEmail": "이메일 주소로 로그인 하기",
+  "loginWithApple": "Apple 계정으로 로그인 하기",
+  "noAccount": "아직 계정이 없으신가요?",
+  "signUp": "가입해 주세요!"
+}
