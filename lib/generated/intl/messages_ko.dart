@@ -20,13 +20,18 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
+  static String m0(sex) =>
+      "로그인 하세요! ${Intl.gender(sex, female: '이년들아!', male: '이놈들아!', other: '여러분!')}";
+
+  static String m1(videoCount) => "나만의 특별한 동영상을 만들고 싶으신가요? 지금 바로 가입 하세요!";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "continueWithApple":
             MessageLookupByLibrary.simpleMessage("Apple 계정으로 가입하기"),
         "emailForm": MessageLookupByLibrary.simpleMessage("이메일 주소로 가입하기"),
         "havaAccount": MessageLookupByLibrary.simpleMessage("이미 계정이 있으신가요?"),
-        "login": MessageLookupByLibrary.simpleMessage("로그인 하세요!"),
+        "login": m0,
         "loginContents":
             MessageLookupByLibrary.simpleMessage("TikTok 회원이신가요? 로그인 하세요!"),
         "loginTitle": MessageLookupByLibrary.simpleMessage("TikTok 로그인"),
@@ -36,8 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("이메일 주소로 로그인 하기"),
         "noAccount": MessageLookupByLibrary.simpleMessage("아직 계정이 없으신가요?"),
         "signUp": MessageLookupByLibrary.simpleMessage("가입해 주세요!"),
-        "signUpContents": MessageLookupByLibrary.simpleMessage(
-            "나만의 특별한 동영상을 만들고 싶으신가요? 지금 바로 가입 하세요!"),
+        "signUpContents": m1,
         "signUpTitle": MessageLookupByLibrary.simpleMessage("TikTok 회원가입")
       };
 }

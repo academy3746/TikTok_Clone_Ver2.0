@@ -59,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
                     opacity: 0.7,
                     child: Text(
                       //"Create a profile, follow other accounts, make your own videos, and more.",
-                      S.of(context).signUpContents,
+                      S.of(context).signUpContents(65535),
                       style: const TextStyle(
                         fontSize: Sizes.size16,
                         //color: isDarkMode(context) ? Colors.grey.shade300 : Colors.black45,
@@ -142,7 +142,7 @@ class SignUpScreen extends StatelessWidget {
                     onTap: () => _onLoginTap(context),
                     child: Text(
                       //"Log in!",
-                      S.of(context).login,
+                      S.of(context).login("male"),
                       style: TextStyle(
                         fontSize: Sizes.size16,
                         fontWeight: FontWeight.w600,

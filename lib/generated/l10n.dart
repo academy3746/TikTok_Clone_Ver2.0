@@ -60,13 +60,13 @@ class S {
     );
   }
 
-  /// `Create a profile, follow other accounts, make your own videos, and more.`
-  String get signUpContents {
+  /// `Create a profile, follow other accounts, make your own {videoCount, plural, =0{no videos} =1{video} other{videos}}, and more.`
+  String signUpContents(num videoCount) {
     return Intl.message(
-      'Create a profile, follow other accounts, make your own videos, and more.',
+      'Create a profile, follow other accounts, make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.',
       name: 'signUpContents',
       desc: '',
-      args: [],
+      args: [videoCount],
     );
   }
 
@@ -100,13 +100,13 @@ class S {
     );
   }
 
-  /// `Log in!`
-  String get login {
+  /// `Log in! {sex, select, male{guys!} female{girls!} other{sir!}}`
+  String login(String sex) {
     return Intl.message(
-      'Log in!',
+      'Log in! ${Intl.gender(sex, male: 'guys!', female: 'girls!', other: 'sir!')}',
       name: 'login',
       desc: '',
-      args: [],
+      args: [sex],
     );
   }
 

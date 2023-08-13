@@ -4,7 +4,7 @@
   "emailForm": "이메일 주소로 가입하기",
   "continueWithApple": "Apple 계정으로 가입하기",
   "havaAccount": "이미 계정이 있으신가요?",
-  "login": "로그인 하세요!",
+  "login": "로그인 하세요! {sex, select, male{이놈들아!} female{이년들아!} other{여러분!}}",
 
   "loginTitle": "TikTok 로그인",
   "loginContents": "TikTok 회원이신가요? 로그인 하세요!",

@@ -20,6 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(sex) =>
+      "Log in! ${Intl.gender(sex, female: 'girls!', male: 'guys!', other: 'sir!')}";
+
+  static String m1(videoCount) =>
+      "Create a profile, follow other accounts, make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "continueWithApple":
@@ -28,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Use Email & Password"),
         "havaAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
-        "login": MessageLookupByLibrary.simpleMessage("Log in!"),
+        "login": m0,
         "loginContents": MessageLookupByLibrary.simpleMessage(
             "Manage your account, check notifications, comment on videos, and more."),
         "loginTitle": MessageLookupByLibrary.simpleMessage("Log in to TikTok"),
@@ -39,8 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up!"),
-        "signUpContents": MessageLookupByLibrary.simpleMessage(
-            "Create a profile, follow other accounts, make your own videos, and more."),
+        "signUpContents": m1,
         "signUpTitle":
             MessageLookupByLibrary.simpleMessage("Sign up for TikTok")
       };
