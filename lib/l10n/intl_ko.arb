@@ -11,5 +11,9 @@
   "loginWithEmail": "이메일 주소로 로그인 하기",
   "loginWithApple": "Apple 계정으로 로그인 하기",
   "noAccount": "아직 계정이 없으신가요?",
-  "signUp": "가입해 주세요!"
+  "signUp": "가입해 주세요!",
+  "likeCount": "{value}",
+  "commentCount": "{value}",
+  "commentTitle": "{value} {value2, plural, =1{comment} other{comments}}",
+  "heartCount": "{value}"
 }

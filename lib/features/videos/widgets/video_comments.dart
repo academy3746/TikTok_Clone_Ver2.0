@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
+import '../../../generated/l10n.dart';
 import '../../../utility.dart';
 
 class VideoComments extends StatefulWidget {
@@ -51,7 +52,7 @@ class _VideoCommentsState extends State<VideoComments> {
         appBar: AppBar(
           backgroundColor: darkMode ? null : Colors.grey.shade50,
           automaticallyImplyLeading: false,
-          title: const Text("22,796 Comments"),
+          title: Text(S.of(context).commentTitle(22796, 22796)),
           actions: [
             IconButton(
               onPressed: _onClosePressed,
@@ -111,7 +112,7 @@ class _VideoCommentsState extends State<VideoComments> {
                           ),
                           Gaps.v2,
                           Text(
-                            "52.2K",
+                            S.of(context).heartCount(78500),
                             style: TextStyle(
                               color: Colors.grey.shade500,
                             ),

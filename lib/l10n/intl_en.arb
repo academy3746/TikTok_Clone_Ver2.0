@@ -11,5 +11,45 @@
   "loginWithEmail": "Use Email & Password",
   "loginWithApple": "Continue with Apple",
   "noAccount": "Don't have an account?",
-  "signUp": "Sign up!"
+  "signUp": "Sign up!",
+  "likeCount": "{value}",
+  "@likeCount": {
+    "description": "Count of LIKES",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentCount": "{value}",
+  "@commentCount": {
+    "description": "Count of comments",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentTitle": "{value} {value2, plural, =1{comment} other{comments}}",
+  "@commentTitle": {
+    "description": "Total Count of comments",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "heartCount": "{value}",
+  "@heartCount": {
+    "description": "Total Count of LIKES",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  }
 }
