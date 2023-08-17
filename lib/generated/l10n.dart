@@ -50,13 +50,16 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Sign up for TikTok`
-  String get signUpTitle {
+  /// `Sign up for TikTok {when}`
+  String signUpTitle(DateTime when) {
+    final DateFormat whenDateFormat = DateFormat.MMMEd(Intl.getCurrentLocale());
+    final String whenString = whenDateFormat.format(when);
+
     return Intl.message(
-      'Sign up for TikTok',
+      'Sign up for TikTok $whenString',
       name: 'signUpTitle',
       desc: '',
-      args: [],
+      args: [whenString],
     );
   }
 

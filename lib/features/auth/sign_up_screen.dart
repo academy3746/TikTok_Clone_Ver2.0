@@ -48,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
                   Gaps.v80,
                   Text(
                     //"Sign up for TikTok",
-                    S.of(context).signUpTitle,
+                    S.of(context).signUpTitle(DateTime.now()),
                     style: const TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,

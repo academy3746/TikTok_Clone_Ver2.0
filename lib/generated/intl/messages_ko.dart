@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m5(videoCount) => "나만의 특별한 동영상을 만들고 싶으신가요? 지금 바로 가입 하세요!";
 
+  static String m6(when) => "TikTok 회원가입 ${when}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "commentCount": m0,
@@ -55,6 +57,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "noAccount": MessageLookupByLibrary.simpleMessage("아직 계정이 없으신가요?"),
         "signUp": MessageLookupByLibrary.simpleMessage("가입해 주세요!"),
         "signUpContents": m5,
-        "signUpTitle": MessageLookupByLibrary.simpleMessage("TikTok 회원가입")
+        "signUpTitle": m6
       };
 }

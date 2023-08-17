@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(videoCount) =>
       "Create a profile, follow other accounts, make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.";
 
+  static String m6(when) => "Sign up for TikTok ${when}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "commentCount": m0,
@@ -59,7 +61,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up!"),
         "signUpContents": m5,
-        "signUpTitle":
-            MessageLookupByLibrary.simpleMessage("Sign up for TikTok")
+        "signUpTitle": m6
       };
 }

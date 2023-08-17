@@ -1,5 +1,5 @@
 {
-  "signUpTitle": "TikTok 회원가입",
+  "signUpTitle": "TikTok 회원가입 {when}",
   "signUpContents": "나만의 특별한 동영상을 만들고 싶으신가요? 지금 바로 가입 하세요!",
   "emailForm": "이메일 주소로 가입하기",
   "continueWithApple": "Apple 계정으로 가입하기",
