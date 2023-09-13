@@ -15,12 +15,13 @@ class SignUpScreen extends StatelessWidget {
 
   // Under score in front of properties means private in dart
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
+  void _onLoginTap(BuildContext context) async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
+    print("Came back to previous screen");
   }
 
   void _onEmailTap(BuildContext context) {
