@@ -15,19 +15,35 @@ class SignUpScreen extends StatelessWidget {
 
   // Under score in front of properties means private in dart
 
-  void _onLoginTap(BuildContext context) async {
-    await Navigator.of(context).push(
+  void _onLoginTap(BuildContext context) {
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
-    print("Came back to previous screen");
   }
 
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(
+      /*MaterialPageRoute(
         builder: (context) => const UsernameScreen(),
+      ),*/
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 300),
+        reverseTransitionDuration: const Duration(milliseconds: 500),
+        pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) =>
+            const UsernameScreen(),
+        transitionsBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation, child) {
+          return ScaleTransition(
+            scale: animation,
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        }
       ),
     );
   }
@@ -89,7 +105,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                  if(orientation == Orientation.landscape)
+                  if (orientation == Orientation.landscape)
                     Row(
                       children: [
                         Expanded(
