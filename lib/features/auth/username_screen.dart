@@ -8,6 +8,7 @@ import 'package:tiktok/features/auth/email_screen.dart';
 
 class UsernameScreen extends StatefulWidget {
   static String routeName = "/username";
+
   const UsernameScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,11 +39,17 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
-      ),
+    Navigator.of(context).pushNamed(
+      EmailScreen.routeName,
+      arguments: EmailScreenArgs(username: _username),
     );
+    /*Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EmailScreen(
+          userName: _username,
+        ),
+      ),
+    );*/
   }
 
   void _onScaffoldTap() {
