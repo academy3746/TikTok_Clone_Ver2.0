@@ -9,10 +9,12 @@ import '../../constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
+  final String tab;
 
   const UserProfileScreen({
     super.key,
     required this.username,
+    required this.tab,
   });
 
   @override
@@ -36,6 +38,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == "likes" ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder:
@@ -274,7 +277,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 fit: BoxFit.cover,
                                 placeholder: "assets/images/shogun.webp",
                                 image:
-                                    "https://cdn.ppomppu.co.kr/zboard/data3/2023/0213/20230213123607_5Hf2QkU0hr.jpeg",
+                                    "https://i1.ruliweb.com/ori/23/02/09/18633a446364d1021.png",
                               ),
                             ),
                           ],

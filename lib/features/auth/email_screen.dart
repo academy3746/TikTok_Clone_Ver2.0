@@ -14,8 +14,12 @@ class EmailScreenArgs {
 
 class EmailScreen extends StatefulWidget {
   static String routeName = "/email";
+  final String username;
 
-  const EmailScreen({Key? key}) : super(key: key);
+  const EmailScreen({
+    Key? key,
+    required this.username,
+  }) : super(key: key);
 
   @override
   State<EmailScreen> createState() => _EmailScreenState();
@@ -74,7 +78,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
+    //final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
 
     return GestureDetector(
       onTap: _onScaffoldTap,
@@ -93,7 +97,7 @@ class _EmailScreenState extends State<EmailScreen> {
             children: [
               Gaps.v40,
               Text(
-                "What is your E-mail, ${args.username}?",
+                "What is your E-mail, ${widget.username}?",
                 style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
