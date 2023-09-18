@@ -49,7 +49,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: _selectedIndex == 0 || darkMode ? Colors.black : Colors.white,
+      backgroundColor:
+          _selectedIndex == 0 || darkMode ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
@@ -66,7 +67,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const UserProfileScreen(),
+            child: const UserProfileScreen(
+              username: "DIO",
+            ),
           ),
         ],
       ),

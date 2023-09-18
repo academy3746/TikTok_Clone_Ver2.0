@@ -8,7 +8,12 @@ import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
 import '../../constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -33,10 +38,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         child: DefaultTabController(
           length: 2,
           child: NestedScrollView(
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  title: const Text("DIO"),
+                  title: Text(widget.username),
                   actions: [
                     IconButton(
                       onPressed: _onGearPressed,
@@ -61,9 +67,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "@DIO",
-                            style: TextStyle(
+                          Text(
+                            "@${widget.username}",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: Sizes.size18,
                             ),
@@ -253,7 +259,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ScrollViewKeyboardDismissBehavior.onDrag,
                     itemCount: 20,
                     padding: EdgeInsets.zero,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 9 / 14,
                       crossAxisCount: 3,
                       crossAxisSpacing: Sizes.size2,
