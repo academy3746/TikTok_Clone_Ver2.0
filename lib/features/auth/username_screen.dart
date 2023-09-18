@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
@@ -39,10 +40,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    Navigator.of(context).pushNamed(
+    context.push(EmailScreen.routeName);
+    /*Navigator.of(context).pushNamed(
       EmailScreen.routeName,
       arguments: EmailScreenArgs(username: _username),
-    );
+    );*/
     /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EmailScreen(

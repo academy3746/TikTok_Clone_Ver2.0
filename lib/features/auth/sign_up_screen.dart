@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/auth_button.dart';
@@ -15,7 +16,9 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   void _onLoginTap(BuildContext context) {
-    Navigator.of(context).pushNamed(LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
+    //context.go(LoginScreen.routeName);
+    //Navigator.of(context).pushNamed(LoginScreen.routeName);
     /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
@@ -24,7 +27,9 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
+    //context.go(UsernameScreen.routeName);
+    //Navigator.of(context).pushNamed(UsernameScreen.routeName);
     /*Navigator.of(context).push(
       PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 300),
