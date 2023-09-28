@@ -83,14 +83,6 @@ class TikTokApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      //home: const SignUpScreen(),
-      /*initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UsernameScreen.routeName: (context) => const UsernameScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen(),
-      },*/
     );
   }
 }

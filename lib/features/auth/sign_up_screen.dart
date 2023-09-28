@@ -12,8 +12,8 @@ import 'package:tiktok/features/auth/username_screen.dart';
 import '../../utility.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeURL = "/";
-  static const routeName = "signUp";
+  static String routeURL = "signUp";
+  static String routeName = "signUp";
   const SignUpScreen({Key? key}) : super(key: key);
 
   void _onLoginTap(BuildContext context) {
