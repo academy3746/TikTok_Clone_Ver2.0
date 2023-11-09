@@ -130,36 +130,28 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
                         ),
                         Gaps.v10,
                         CameraOptionButton(
-                          icon: const Icon(
-                            Icons.flash_off_rounded,
-                          ),
+                          icon: const Icon(Icons.flash_off_rounded),
                           onPressed: () => _setFlashMode(FlashMode.off),
                           flashMode: _flashMode,
                           toggleMode: FlashMode.off,
                         ),
                         Gaps.v10,
                         CameraOptionButton(
-                          icon: const Icon(
-                            Icons.flash_on_rounded,
-                          ),
+                          icon: const Icon(Icons.flash_on_rounded),
                           onPressed: () => _setFlashMode(FlashMode.always),
                           flashMode: _flashMode,
                           toggleMode: FlashMode.always,
                         ),
                         Gaps.v10,
                         CameraOptionButton(
-                          icon: const Icon(
-                            Icons.flash_auto_rounded,
-                          ),
+                          icon: const Icon(Icons.flash_auto_rounded),
                           onPressed: () => _setFlashMode(FlashMode.auto),
                           flashMode: _flashMode,
                           toggleMode: FlashMode.auto,
                         ),
                         Gaps.v10,
                         CameraOptionButton(
-                          icon: const Icon(
-                            Icons.flashlight_on_rounded,
-                          ),
+                          icon: const Icon(Icons.flashlight_on_rounded),
                           onPressed: () => _setFlashMode(FlashMode.torch),
                           flashMode: _flashMode,
                           toggleMode: FlashMode.torch,
