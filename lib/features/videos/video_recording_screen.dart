@@ -35,7 +35,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
     await _cameraController.initialize();
   }
 
-  /// 권한 요청
+  /// Ask Permission to user
   Future<void> _initPermissions() async {
     final cameraPermission = await Permission.camera.request();
     final micPermission = await Permission.microphone.request();
@@ -50,7 +50,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
       await _initCamera();
       setState(() {});
     } else {
-      print("Permission denied by user.");
+      print("Access to device camera has denied by user.");
+
+      openAppSettings();
     }
   }
 
@@ -58,6 +60,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen> {
   void initState() {
     super.initState();
     _initPermissions();
+  }
+
+  @override
+  void dispose() {
+    _cameraController.dispose();
+
+    super.dispose();
   }
 
   @override
