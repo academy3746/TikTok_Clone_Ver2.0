@@ -6,8 +6,6 @@ import 'constants/sizes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// This is the glue that binds the framework to the Flutter engine.
-
   /// 앱 세로화면 고정 모드
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -31,9 +29,6 @@ class TikTokApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: const Color(0xFFE9435A),
-        /*bottomAppBarTheme: BottomAppBarTheme(
-          color: Colors.grey.shade50,
-        ),*/
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
