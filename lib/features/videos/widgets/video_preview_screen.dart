@@ -10,9 +10,11 @@ class VideoPreviewScreen extends StatefulWidget {
   const VideoPreviewScreen({
     super.key,
     required this.video,
+    required this.isPicked,
   });
 
   final XFile video;
+  final bool isPicked;
 
   @override
   State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();
@@ -67,13 +69,16 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
           style: TextStyle(color: Colors.white),
         ),
         actions: [
-          IconButton(
-            onPressed: _saveToGallery,
-            icon: FaIcon(
-              _savedVideo ? FontAwesomeIcons.check : FontAwesomeIcons.download,
-              color: Colors.white,
+          if (!widget.isPicked)
+            IconButton(
+              onPressed: _saveToGallery,
+              icon: FaIcon(
+                _savedVideo
+                    ? FontAwesomeIcons.check
+                    : FontAwesomeIcons.download,
+                color: Colors.white,
+              ),
             ),
-          ),
         ],
       ),
       body: _videoPlayerController.value.isInitialized
