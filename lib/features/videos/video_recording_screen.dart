@@ -221,7 +221,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                                 color: Colors.red.shade400,
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               height: Sizes.size80 + Sizes.size14,
                               width: Sizes.size80 + Sizes.size14,
                               child: CircularProgressIndicator(
