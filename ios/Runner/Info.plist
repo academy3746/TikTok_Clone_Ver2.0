@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>촬영한 사진 및 동영상을 갤러리에 저장하기 위한 권한을 수락하시겠습니까?</string>
     <key>NSCameraUsageDescription</key>
     <string>사진 및 동영상 촬영 권한을 수락하시겠습니까?</string>
     <key>NSMicrophoneUsageDescription</key>

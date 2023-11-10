@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
@@ -19,7 +21,9 @@ class VideoPreviewScreen extends StatefulWidget {
 class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
 
-  Future<void> _initVideo() async {
+  bool _savedVideo = false;
+
+  Future<void> _initVideos() async {
     _videoPlayerController = VideoPlayerController.file(
       File(widget.video.path),
     );
@@ -33,11 +37,23 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     setState(() {});
   }
 
+  Future<void> _saveToGallery() async {
+    if (_savedVideo) return;
+
+    await GallerySaver.saveVideo(
+      widget.video.path,
+      albumName: "TikTok Clone",
+    );
+
+    _savedVideo = true;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
 
-    _initVideo();
+    _initVideos();
   }
 
   @override
@@ -45,9 +61,24 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Preview your video"),
+        backgroundColor: Colors.black,
+        title: const Text(
+          "Preview your video",
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          IconButton(
+            onPressed: _saveToGallery,
+            icon: FaIcon(
+              _savedVideo ? FontAwesomeIcons.check : FontAwesomeIcons.download,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
-      body: _videoPlayerController.value.isInitialized ? VideoPlayer(_videoPlayerController) : null,
+      body: _videoPlayerController.value.isInitialized
+          ? VideoPlayer(_videoPlayerController)
+          : null,
     );
   }
 }
