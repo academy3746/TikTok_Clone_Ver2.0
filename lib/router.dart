@@ -4,6 +4,7 @@ import 'package:tiktok/features/auth/login_screen.dart';
 import 'package:tiktok/features/auth/sign_up_screen.dart';
 import 'package:tiktok/features/onboarding/interest_screen.dart';
 
+/// For URL Request
 final router = GoRouter(
   routes: [
     GoRoute(
