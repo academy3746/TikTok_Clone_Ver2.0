@@ -24,7 +24,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
   void initState() {
     super.initState();
     _passwordController.addListener(() {
-      //print(_passwordController.text);
       setState(() {
         _password = _passwordController.text;
       });

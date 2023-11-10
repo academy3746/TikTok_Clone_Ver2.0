@@ -8,32 +8,29 @@ import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/auth_button.dart';
 import 'package:tiktok/features/auth/login_screen.dart';
 import 'package:tiktok/features/auth/username_screen.dart';
-//import 'package:tiktok/generated/l10n.dart';
 import '../../utility.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeURL = "signUp";
+  static String routeURL = "/";
   static String routeName = "signUp";
+
   const SignUpScreen({Key? key}) : super(key: key);
 
   void _onLoginTap(BuildContext context) {
-    context.push(LoginScreen.routeName);
-    //context.go(LoginScreen.routeName);
-    //Navigator.of(context).pushNamed(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    //context.push("/users/DIO?show=likes");
-    //context.push(UsernameScreen.routeName);
-    //context.push("/username");
-    context.pushNamed(UsernameScreen.routeName);
-    //context.go(UsernameScreen.routeName);
-    //Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const UsernameScreen(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    //print(Localizations.localeOf(context));
     return OrientationBuilder(
       builder: (BuildContext context, Orientation orientation) {
         print(orientation);
@@ -48,7 +45,6 @@ class SignUpScreen extends StatelessWidget {
                   Gaps.v80,
                   const Text(
                     "Sign up for TikTok",
-                    //S.of(context).signUpTitle(DateTime.now()),
                     style: TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
@@ -59,10 +55,8 @@ class SignUpScreen extends StatelessWidget {
                     opacity: 0.7,
                     child: Text(
                       "Create a profile, follow other accounts, make your own videos, and more.",
-                      //S.of(context).signUpContents(65535),
                       style: TextStyle(
                         fontSize: Sizes.size16,
-                        //color: isDarkMode(context) ? Colors.grey.shade300 : Colors.black45,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -73,7 +67,6 @@ class SignUpScreen extends StatelessWidget {
                       onTap: () => _onEmailTap(context),
                       child: const AuthButton(
                         text: "Use Email & Password",
-                        //text: S.of(context).emailForm,
                         icon: FaIcon(
                           FontAwesomeIcons.user,
                         ),
@@ -82,7 +75,6 @@ class SignUpScreen extends StatelessWidget {
                     Gaps.v16,
                     const AuthButton(
                       text: "Continue with Apple",
-                      //text: S.of(context).continueWithApple,
                       icon: FaIcon(
                         FontAwesomeIcons.apple,
                       ),
@@ -96,7 +88,6 @@ class SignUpScreen extends StatelessWidget {
                             onTap: () => _onEmailTap(context),
                             child: const AuthButton(
                               text: "Use Email & Password",
-                              //text: S.of(context).emailForm,
                               icon: FaIcon(
                                 FontAwesomeIcons.user,
                               ),
@@ -107,7 +98,6 @@ class SignUpScreen extends StatelessWidget {
                         const Expanded(
                           child: AuthButton(
                             text: "Continue with Apple",
-                            //text: S.of(context).continueWithApple,
                             icon: FaIcon(
                               FontAwesomeIcons.apple,
                             ),
@@ -120,7 +110,6 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            //color: isDarkMode(context) ? Colors.grey.shade900 : Colors.grey.shade50,
             color: isDarkMode(context) ? null : Colors.grey.shade50,
             elevation: 2,
             child: Padding(
@@ -132,7 +121,6 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   const Text(
                     "Already have an account?",
-                    //S.of(context).havaAccount,
                     style: TextStyle(
                       fontSize: Sizes.size16,
                     ),
@@ -142,7 +130,6 @@ class SignUpScreen extends StatelessWidget {
                     onTap: () => _onLoginTap(context),
                     child: Text(
                       "Log in!",
-                      //S.of(context).login("male"),
                       style: TextStyle(
                         fontSize: Sizes.size16,
                         fontWeight: FontWeight.w600,

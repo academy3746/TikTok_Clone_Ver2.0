@@ -13,8 +13,6 @@ class EmailScreenArgs {
 }
 
 class EmailScreen extends StatefulWidget {
-  static String routeURL = "email";
-  static String routeName = "email";
   final String username;
 
   const EmailScreen({
@@ -35,7 +33,6 @@ class _EmailScreenState extends State<EmailScreen> {
   void initState() {
     super.initState();
     _emailController.addListener(() {
-      //print(_emailController.text);
       setState(() {
         _email = _emailController.text;
       });

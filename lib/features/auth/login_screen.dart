@@ -4,20 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/login_form_screen.dart';
-//import 'package:tiktok/generated/l10n.dart';
 import '../../utility.dart';
 import 'common/auth_button.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String routeURL = "login";
+  static String routeURL = "/login";
   static String routeName = "login";
   const LoginScreen({Key? key}) : super(key: key);
 
   void _onSignUpTap(BuildContext context) {
     /// Avoid Infinite Back: Stack 제거
     context.pop();
-    //context.go(SignUpScreen.routeName);
-    //Navigator.of(context).pop();
   }
 
   void _onLoginEmailTap(BuildContext context) {
@@ -51,10 +48,8 @@ class LoginScreen extends StatelessWidget {
                 opacity: 0.7,
                 child: Text(
                   "Manage your account, check notifications, comment on videos, and more.",
-                  //S.of(context).loginContents,
                   style: TextStyle(
                     fontSize: Sizes.size16,
-                    /*color: isDarkMode(context) ? Colors.grey.shade300 : Colors.black45,*/
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -64,7 +59,6 @@ class LoginScreen extends StatelessWidget {
                 onTap: () => _onLoginEmailTap(context),
                 child: const AuthButton(
                   text: "Use Email & Password",
-                  //text: S.of(context).loginWithEmail,
                   icon: FaIcon(
                     FontAwesomeIcons.user,
                   ),
@@ -73,7 +67,6 @@ class LoginScreen extends StatelessWidget {
               Gaps.v16,
               const AuthButton(
                 text: "Continue with Apple",
-                //text: S.of(context).loginWithApple,
                 icon: FaIcon(
                   FontAwesomeIcons.apple,
                 ),
@@ -94,7 +87,6 @@ class LoginScreen extends StatelessWidget {
             children: [
               const Text(
                 "Don't have an account?",
-                //S.of(context).noAccount,
                 style: TextStyle(
                   fontSize: Sizes.size16,
                 ),
@@ -104,7 +96,6 @@ class LoginScreen extends StatelessWidget {
                 onTap: () => _onSignUpTap(context),
                 child: Text(
                   "Sign up!",
-                  //S.of(context).signUp,
                   style: TextStyle(
                     fontSize: Sizes.size16,
                     fontWeight: FontWeight.w600,

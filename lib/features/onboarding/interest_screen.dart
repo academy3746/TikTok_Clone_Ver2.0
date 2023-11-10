@@ -50,6 +50,9 @@ const interests = [
 class InterestScreen extends StatefulWidget {
   const InterestScreen({super.key});
 
+  static const String routeName = "interests";
+  static const String routeURL = "/tutorial";
+
   @override
   State<InterestScreen> createState() => _InterestScreenState();
 }
@@ -77,12 +80,6 @@ class _InterestScreenState extends State<InterestScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    /*
-    _scrollController.addListener(() {
-      // Scroll Event
-      print(_scrollController.offset);
-    });
-    */
   }
 
   @override

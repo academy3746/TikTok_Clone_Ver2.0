@@ -1,16 +1,12 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
 import 'package:tiktok/features/auth/email_screen.dart';
 
 class UsernameScreen extends StatefulWidget {
-  static String routeURL = "username";
-  static String routeName = "username";
-
   const UsernameScreen({Key? key}) : super(key: key);
 
   @override
@@ -26,7 +22,6 @@ class _UsernameScreenState extends State<UsernameScreen> {
   void initState() {
     super.initState();
     _usernameController.addListener(() {
-      //print(_usernameController.text);
       setState(() {
         _username = _usernameController.text;
       });
@@ -41,9 +36,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    context.pushNamed(
-      EmailScreen.routeName,
-      extra: EmailScreenArgs(username: _username),
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => EmailScreen(username: _username),
+      ),
     );
   }
 

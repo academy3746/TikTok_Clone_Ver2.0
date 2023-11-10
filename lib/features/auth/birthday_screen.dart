@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
@@ -21,7 +22,6 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   @override
   void initState() {
     super.initState();
-    //print(date.toString().split(" ").first);
     _setTextFieldDate(initialDate);
   }
 
@@ -32,13 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      // 중첩된 이전 화면들을 스택에서 삭제
-      MaterialPageRoute(
-        builder: (context) => const InterestScreen(),
-      ),
-      (route) => false,
-    );
+    context.pushReplacementNamed(InterestScreen.routeName);
   }
 
   void _onScaffoldTap() {

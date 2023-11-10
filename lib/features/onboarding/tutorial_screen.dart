@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok/common/widgets/main_navigation/main_navigation_screen.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -24,7 +24,6 @@ class _TutorialScreenState extends State<TutorialScreen> {
   Page _page = Page.first;
 
   void _onPanUpdate(DragUpdateDetails details) {
-    //print(details);
     if (details.delta.dx > 0) {
       // Drag to right
       setState(() {
