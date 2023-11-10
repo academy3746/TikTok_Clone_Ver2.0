@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/videos/widgets/camera_option.dart';
+import 'package:tiktok/features/videos/widgets/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   static String routeURL = "/";
@@ -57,6 +58,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     await _cameraController.initialize();
 
+    /// Setting only for IOS device to sync recording
+    await _cameraController.prepareForVideoRecording();
+
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -96,17 +100,35 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   /// Start Recording
-  void _startRecording(TapDownDetails details) {
+  Future<void> _startRecording(TapDownDetails details) async {
+    if (_cameraController.value.isRecordingVideo) return;
+
+    await _cameraController.startVideoRecording();
+
     print("Start Recording!");
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
   /// Stop Recording
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) return;
+
     print("Stop Recording!");
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final video = await _cameraController.stopVideoRecording();
+    print(video.path);
+
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => VideoPreviewScreen(video: video),
+        ),
+      );
+    }
   }
 
   @override
