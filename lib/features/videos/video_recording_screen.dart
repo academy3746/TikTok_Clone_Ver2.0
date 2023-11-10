@@ -21,7 +21,7 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
 
   bool _isSelfMode = false;
@@ -160,6 +160,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     super.initState();
 
     _initPermissions();
+
+    /// Exit Application on background
+    WidgetsBinding.instance.addObserver(this);
+
     _progressAnimationController.addListener(() {
       setState(() {});
 
@@ -178,6 +182,23 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     _progressAnimationController.dispose();
 
     super.dispose();
+  }
+
+  /// Get App Life Cycle Changes
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (!_hasPermission) return;
+
+    if (!_cameraController.value.isInitialized) return;
+
+    if (state == AppLifecycleState.inactive) {
+      if (!_cameraController.value.isInitialized) return;
+      _cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      await _initCamera();
+
+      setState(() {});
+    }
   }
 
   @override
