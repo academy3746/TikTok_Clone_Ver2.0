@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
 
@@ -29,23 +30,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   void _onSubmitTap() {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
-        // validate method returns true or false.
+        /// validate method returns true or false.
         _formKey.currentState!.save();
-        //print(formData);
-        Navigator.of(context).pushAndRemoveUntil(
-          // 중첩된 이전 화면들을 스택에서 삭제
-          MaterialPageRoute(
-            builder: (context) => const InterestScreen(),
-          ),
-          (route) => false,
-          /*(route) {
-            print(route);
-            return false;
-            }*/
-        );
+        /// 중첩된 이전 화면들을 스택에서 삭제
+        context.goNamed(InterestScreen.routeName);
       }
     }
-    //_formKey.currentState?.validate();
   }
 
   void _toggleObscureText() {

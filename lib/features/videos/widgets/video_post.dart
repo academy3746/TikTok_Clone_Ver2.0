@@ -10,8 +10,6 @@ import 'package:tiktok/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-import '../../../generated/l10n.dart';
-
 class VideoPostScreen extends StatefulWidget {
   final Function onVideoFinished;
   final int index;
@@ -244,16 +242,16 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                   onTap: () => _onVolumeTap(),
                 ),
                 Gaps.v16,
-                VideoButton(
+                const VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: S.of(context).likeCount(1250000),
+                  text: "125K",
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: VideoButton(
+                  child: const VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: S.of(context).commentCount(22796),
+                    text: "227K",
                   ),
                 ),
                 Gaps.v24,
