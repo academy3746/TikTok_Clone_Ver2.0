@@ -64,10 +64,27 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
-      name: VideoRecordingScreen.routeName,
-      path: VideoRecordingScreen.routeURL,
-      builder: (BuildContext context, GoRouterState state) =>
-      const VideoRecordingScreen(),
-    ),
+        name: VideoRecordingScreen.routeName,
+        path: VideoRecordingScreen.routeURL,
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return CustomTransitionPage(
+            transitionDuration: const Duration(milliseconds: 80),
+            child: const VideoRecordingScreen(),
+            transitionsBuilder: (BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                Widget child) {
+              final position = Tween(
+                begin: const Offset(0, 1),
+                end: Offset.zero,
+              ).animate(animation);
+
+              return SlideTransition(
+                position: position,
+                child: child,
+              );
+            },
+          );
+        }),
   ],
 );
