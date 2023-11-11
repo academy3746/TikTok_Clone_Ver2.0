@@ -33,11 +33,14 @@ class _VideoPostScreenState extends State<VideoPostScreen>
       VideoPlayerController.asset("assets/videos/video01.mp4");
 
   bool _isPaused = false;
+
   bool _isMuted = false;
 
   final Duration _animationDuration = const Duration(milliseconds: 300);
 
   late final AnimationController _animationController;
+
+  bool _autoMute = videoConfig.autoMute;
 
   void _onVideoFinished() {
     /// 다음 비디오로 넘어가지 말고 현재 화면에 머무를 것..
@@ -61,7 +64,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
     setState(() {});
   }
 
-  _onVolumeTap() {
+  void _onVolumeTap() {
     _isMuted = !_isMuted;
     print(_isMuted ? 'Mute Mode' : 'Sound display on');
     if (_isMuted) {
@@ -93,6 +96,12 @@ class _VideoPostScreenState extends State<VideoPostScreen>
       //print(_animationController.value);
       setState(() {});
     });*/
+
+    videoConfig.addListener(() {
+      setState(() {
+        _autoMute = videoConfig.autoMute;
+      });
+    });
   }
 
   @override
@@ -198,11 +207,10 @@ class _VideoPostScreenState extends State<VideoPostScreen>
             top: Sizes.size30,
             left: Sizes.size20,
             child: IconButton(
-              onPressed: VideoConfigData.of(context).toggleMuted,
+              onPressed: videoConfig.toggleAutoMute,
               icon: FaIcon(
-                VideoConfigData.of(context).autoMute
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
+                _autoMute ? FontAwesomeIcons.volumeOff :
+                FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
             ),
