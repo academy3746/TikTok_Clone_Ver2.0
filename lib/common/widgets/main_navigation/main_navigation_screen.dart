@@ -30,7 +30,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<String> _tabs = [
     "home",
     "discover",
-    "deepfake",
+    "postVideo",
     "inbox",
     "profile",
   ];
