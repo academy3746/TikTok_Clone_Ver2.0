@@ -8,6 +8,7 @@ import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/discover/discover_screen.dart';
 import 'package:tiktok/features/inbox/inbox_screen.dart';
 import 'package:tiktok/features/users/user_profile_screen.dart';
+import 'package:tiktok/features/videos/video_recording_screen.dart';
 import 'package:tiktok/features/videos/video_timeline_screen.dart';
 import 'package:tiktok/utility.dart';
 
@@ -27,11 +28,11 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<String> _tabs = [
-    "HOME",
-    "DISCOVER",
-    "DEEPFAKE",
-    "INBOX",
-    "PROFILE",
+    "home",
+    "discover",
+    "deepfake",
+    "inbox",
+    "profile",
   ];
 
   late int _selectedIndex = _tabs.indexOf(widget.tab);
@@ -43,20 +44,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
-  void _onTapVideoButtonTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        // Render Camera Widget later
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              "Record Video",
-            ),
-          ),
-        ),
-        fullscreenDialog: true,
-      ),
-    );
+  void _onPostVideoButtonTap() {
+    context.pushNamed(VideoRecordingScreen.routeName);
   }
 
   @override
@@ -117,7 +106,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               Gaps.h24,
               GestureDetector(
-                onTap: _onTapVideoButtonTap,
+                onTap: _onPostVideoButtonTap,
                 child: PostVideoButton(
                   inverted: _selectedIndex != 0,
                 ),
