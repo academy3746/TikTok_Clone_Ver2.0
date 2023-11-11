@@ -198,9 +198,9 @@ class _VideoPostScreenState extends State<VideoPostScreen>
             top: Sizes.size30,
             left: Sizes.size20,
             child: IconButton(
-              onPressed: () {},
+              onPressed: VideoConfigData.of(context).toggleMuted,
               icon: FaIcon(
-                VideoConfig.of(context).autoMute
+                VideoConfigData.of(context).autoMute
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
