@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/videos/widgets/video_button.dart';
@@ -146,7 +147,6 @@ class _VideoPostScreenState extends State<VideoPostScreen>
 
   @override
   Widget build(BuildContext context) {
-    //print(_animationController.value);
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -194,6 +194,19 @@ class _VideoPostScreenState extends State<VideoPostScreen>
               ),
             ),
           ),
+          Positioned(
+            top: Sizes.size30,
+            left: Sizes.size20,
+            child: IconButton(
+              onPressed: () {},
+              icon: FaIcon(
+                VideoConfig.of(context).autoMute
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+                color: Colors.white,
+              ),
+            ),
+          ),
           const Positioned(
             bottom: 20,
             left: 10,
@@ -236,7 +249,9 @@ class _VideoPostScreenState extends State<VideoPostScreen>
                 Gaps.v16,
                 GestureDetector(
                   child: VideoButton(
-                    icon: _isMuted ? FontAwesomeIcons.volumeXmark : FontAwesomeIcons.volumeHigh,
+                    icon: _isMuted
+                        ? FontAwesomeIcons.volumeXmark
+                        : FontAwesomeIcons.volumeHigh,
                     text: _isMuted ? "OFF" : "ON",
                   ),
                   onTap: () => _onVolumeTap(),
