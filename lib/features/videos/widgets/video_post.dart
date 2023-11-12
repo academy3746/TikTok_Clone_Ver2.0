@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok/common/widgets/video_configuration/video_config.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
@@ -39,8 +40,6 @@ class _VideoPostScreenState extends State<VideoPostScreen>
   final Duration _animationDuration = const Duration(milliseconds: 300);
 
   late final AnimationController _animationController;
-
-  bool _autoMute = videoConfig.value;
 
   void _onVideoFinished() {
     /// 다음 비디오로 넘어가지 말고 현재 화면에 머무를 것..
@@ -96,12 +95,6 @@ class _VideoPostScreenState extends State<VideoPostScreen>
       //print(_animationController.value);
       setState(() {});
     });*/
-
-    videoConfig.addListener(() {
-      setState(() {
-        _autoMute = videoConfig.value;
-      });
-    });
   }
 
   @override
@@ -208,11 +201,12 @@ class _VideoPostScreenState extends State<VideoPostScreen>
             left: Sizes.size20,
             child: IconButton(
               onPressed: () {
-                videoConfig.value = !videoConfig.value;
+                context.read<VideoConfig>().toggleIsMuted();
               },
               icon: FaIcon(
-                _autoMute ? FontAwesomeIcons.volumeOff :
-                FontAwesomeIcons.volumeHigh,
+                context.watch<VideoConfig>().isMuted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
             ),
