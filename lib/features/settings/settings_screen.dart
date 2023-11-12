@@ -44,9 +44,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 return SwitchListTile.adaptive(
                   title: const Text("Mute Volume"),
                   subtitle: const Text("Kill all volume of videos by default"),
-                  value: videoConfig.autoMute,
+                  value: videoConfig.value,
                   onChanged: (value) {
-                    videoConfig.toggleAutoMute();
+                    videoConfig.value = !videoConfig.value;
                   },
                 );
               },

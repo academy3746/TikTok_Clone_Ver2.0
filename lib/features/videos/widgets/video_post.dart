@@ -40,7 +40,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
 
   late final AnimationController _animationController;
 
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   void _onVideoFinished() {
     /// 다음 비디오로 넘어가지 말고 현재 화면에 머무를 것..
@@ -99,7 +99,7 @@ class _VideoPostScreenState extends State<VideoPostScreen>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -207,7 +207,9 @@ class _VideoPostScreenState extends State<VideoPostScreen>
             top: Sizes.size30,
             left: Sizes.size20,
             child: IconButton(
-              onPressed: videoConfig.toggleAutoMute,
+              onPressed: () {
+                videoConfig.value = !videoConfig.value;
+              },
               icon: FaIcon(
                 _autoMute ? FontAwesomeIcons.volumeOff :
                 FontAwesomeIcons.volumeHigh,
