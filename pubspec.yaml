@@ -24,8 +24,8 @@ dependencies:
   camera: ^0.10.5+4
   gallery_saver: ^2.3.2
   image_picker: ^1.0.4
-  provider: ^6.1.1
   shared_preferences: ^2.2.2
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:

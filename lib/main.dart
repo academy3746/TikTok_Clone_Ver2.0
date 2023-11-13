@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok/common/widgets/video_configuration/video_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiktok/features/videos/repo/video_play_back_config_repo.dart';
+import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
 import 'package:tiktok/router.dart';
 import 'constants/sizes.dart';
 
@@ -18,7 +20,20 @@ void main() async {
     SystemUiOverlayStyle.light,
   );
 
-  runApp(const TikTokApp());
+  final preferences = await SharedPreferences.getInstance();
+
+  final repo = PlaybackConfigRepository(preferences);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => PlaybackConfigViewModel(repo),
+        ),
+      ],
+      child: const TikTokApp(),
+    ),
+  );
 }
 
 class TikTokApp extends StatelessWidget {
@@ -26,69 +41,62 @@ class TikTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (BuildContext context) => VideoConfig(),
+    return MaterialApp.router(
+      routerConfig: router,
+      title: 'TikTok Clone',
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: const Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
         ),
-      ],
-      child: MaterialApp.router(
-        routerConfig: router,
-        title: 'TikTok Clone',
-        themeMode: ThemeMode.system,
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: const Color(0xFFE9435A),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
-          ),
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            surfaceTintColor: Colors.white,
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          tabBarTheme: TabBarTheme(
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
-          ),
-          listTileTheme: const ListTileThemeData(
-            iconColor: Colors.black,
-          ),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          appBarTheme: AppBarTheme(
-            surfaceTintColor: Colors.grey.shade900,
-            backgroundColor: Colors.grey.shade900,
-            titleTextStyle: const TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade900,
-          ),
-          primaryColor: const Color(0xFFE9435A),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
-          ),
-          tabBarTheme: TabBarTheme(
-            unselectedLabelColor: Colors.grey.shade500,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size18,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        debugShowCheckedModeBanner: false,
+        tabBarTheme: TabBarTheme(
+          indicatorColor: Colors.black,
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.grey.shade500,
+        ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.black,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          surfaceTintColor: Colors.grey.shade900,
+          backgroundColor: Colors.grey.shade900,
+          titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
+        primaryColor: const Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        tabBarTheme: TabBarTheme(
+          unselectedLabelColor: Colors.grey.shade500,
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Repository for red & save data only
-class VideoPlaybackConfigRepository {
+class PlaybackConfigRepository {
   static const String _muted = "muted";
   static const String _autoplay = "autoplay";
 
   final SharedPreferences _preferences;
 
-  VideoPlaybackConfigRepository(this._preferences);
+  PlaybackConfigRepository(this._preferences);
 
   /// Save data
   Future<void> setMuted(bool value) async {
@@ -19,11 +19,11 @@ class VideoPlaybackConfigRepository {
   }
 
   /// Read data
-  bool _isMuted() {
+  bool isMuted() {
     return _preferences.getBool(_muted) ?? false;
   }
 
-  bool _isAutoplay() {
+  bool isAutoplay() {
     return _preferences.getBool(_autoplay) ?? false;
   }
 }
