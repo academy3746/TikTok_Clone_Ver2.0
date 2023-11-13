@@ -42,13 +42,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SwitchListTile.adaptive(
               title: const Text("Mute All"),
               subtitle: const Text("Kill all sound of videos by default"),
-              value: context.watch()<PlaybackConfigViewModel>().muted,
+              value: context.watch<PlaybackConfigViewModel>().muted,
               onChanged: (value) => context.read<PlaybackConfigViewModel>().setMuted(value),
             ),
             SwitchListTile.adaptive(
               title: const Text("Autoplay"),
               subtitle: const Text("Play videos automatically by default"),
-              value: context.watch()<PlaybackConfigViewModel>().autoplay,
+              value: context.watch<PlaybackConfigViewModel>().autoplay,
               onChanged: (value) => context.read<PlaybackConfigViewModel>().setAutoPlay(value),
             ),
             SwitchListTile.adaptive(
