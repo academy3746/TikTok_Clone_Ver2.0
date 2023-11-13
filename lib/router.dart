@@ -7,7 +7,7 @@ import 'package:tiktok/features/inbox/widget/activity_screen.dart';
 import 'package:tiktok/features/inbox/widget/chat_detail_screen.dart';
 import 'package:tiktok/features/inbox/widget/chat_screen.dart';
 import 'package:tiktok/features/onboarding/interest_screen.dart';
-import 'package:tiktok/features/videos/video_recording_screen.dart';
+import 'package:tiktok/features/videos/views/video_recording_screen.dart';
 
 /// For URL Request
 final router = GoRouter(

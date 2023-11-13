@@ -11,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/videos/widgets/camera_option.dart';
-import 'package:tiktok/features/videos/widgets/video_preview_screen.dart';
+import 'package:tiktok/features/videos/views/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   static const String routeName = "postVideo";

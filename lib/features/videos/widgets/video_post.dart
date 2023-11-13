@@ -12,21 +12,21 @@ import 'package:tiktok/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPostScreen extends StatefulWidget {
+class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
   final int index;
 
-  const VideoPostScreen({
+  const VideoPost({
     super.key,
     required this.onVideoFinished,
     required this.index,
   });
 
   @override
-  State<VideoPostScreen> createState() => _VideoPostScreenState();
+  State<VideoPost> createState() => _VideoPostState();
 }
 
-class _VideoPostScreenState extends State<VideoPostScreen>
+class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   /// 1. [with] SingleTickerProviderStateMixin: SingleTickerProviderStateMixin 클래스를 통째로 복사할 것이다.
   /// 2. Provides a single Ticker that is configured to only tick while the current tree is enabled, as defined by TickerMode.
