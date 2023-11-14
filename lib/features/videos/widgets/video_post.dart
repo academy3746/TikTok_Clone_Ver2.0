@@ -2,16 +2,17 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
 import 'package:tiktok/features/videos/widgets/video_button.dart';
 import 'package:tiktok/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final int index;
 
@@ -22,10 +23,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   /// 1. [with] SingleTickerProviderStateMixin: SingleTickerProviderStateMixin 클래스를 통째로 복사할 것이다.
   /// 2. Provides a single Ticker that is configured to only tick while the current tree is enabled, as defined by TickerMode.
@@ -53,8 +54,6 @@ class _VideoPostState extends State<VideoPost>
 
     await _videoPlayerController.setLooping(true);
 
-    //await _videoPlayerController.play();
-
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
     }
@@ -78,11 +77,13 @@ class _VideoPostState extends State<VideoPost>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!mounted) return;
 
+    final autoPlay = ref.read(playbackConfigProvider).autoplay;
+
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
 
-      if (false) {
+      if (autoPlay) {
         _videoPlayerController.play();
       }
     }
@@ -123,7 +124,9 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
 
-    if (false) {
+    final muted = ref.read(playbackConfigProvider).muted;
+
+    if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -206,9 +209,9 @@ class _VideoPostState extends State<VideoPost>
             top: Sizes.size30,
             left: Sizes.size20,
             child: IconButton(
-              onPressed: () {},
-              icon: const FaIcon(
-                false
+              onPressed: _onPlaybackConfigChanged,
+              icon: FaIcon(
+                ref.watch(playbackConfigProvider).muted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
