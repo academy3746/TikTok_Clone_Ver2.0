@@ -47,11 +47,14 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
-    _videoPlayerController = VideoPlayerController.asset("assets/videos/video01.mp4");
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/video01.mp4");
 
     await _videoPlayerController.initialize();
 
     await _videoPlayerController.setLooping(true);
+
+    //await _videoPlayerController.play();
 
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
@@ -64,22 +67,20 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVolumeTap() {
     _isMuted = !_isMuted;
-    print(_isMuted ? 'Mute Mode' : 'Sound display on');
+
     if (_isMuted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
     }
-    setState(
-      () {},
-    );
+    setState(() {});
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!mounted) return;
 
     if (info.visibleFraction == 1 &&
-        _isPaused &&
+        !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
       final autoPlay = context.read<PlaybackConfigViewModel>().autoplay;
 
@@ -149,7 +150,9 @@ class _VideoPostState extends State<VideoPost>
       duration: _animationDuration,
     );
 
-    context.read<PlaybackConfigViewModel>().addListener(_onPlaybackConfigChanged);
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
