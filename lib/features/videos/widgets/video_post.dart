@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
-import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
 import 'package:tiktok/features/videos/widgets/video_button.dart';
 import 'package:tiktok/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -82,9 +81,8 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoPlay = context.read<PlaybackConfigViewModel>().autoplay;
 
-      if (autoPlay) {
+      if (false) {
         _videoPlayerController.play();
       }
     }
@@ -125,9 +123,7 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
 
-    final muted = context.read<PlaybackConfigViewModel>().muted;
-
-    if (muted) {
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -149,10 +145,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    context
-        .read<PlaybackConfigViewModel>()
-        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -166,8 +158,6 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   Widget build(BuildContext context) {
-    var mutedValue = context.watch<PlaybackConfigViewModel>().muted;
-
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -216,11 +206,9 @@ class _VideoPostState extends State<VideoPost>
             top: Sizes.size30,
             left: Sizes.size20,
             child: IconButton(
-              onPressed: () {
-                context.read<PlaybackConfigViewModel>().setMuted(!mutedValue);
-              },
-              icon: FaIcon(
-                mutedValue
+              onPressed: () {},
+              icon: const FaIcon(
+                false
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
