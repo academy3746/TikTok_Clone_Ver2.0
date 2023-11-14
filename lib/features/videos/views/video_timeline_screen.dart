@@ -1,16 +1,17 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok/features/videos/view_models/video_timeline_vm.dart';
 import 'package:tiktok/features/videos/widgets/video_post.dart';
 
-class VideoTimelineScreen extends StatefulWidget {
+class VideoTimelineScreen extends ConsumerStatefulWidget {
   const VideoTimelineScreen({super.key});
 
   @override
-  State<VideoTimelineScreen> createState() => _VideoTimelineScreenState();
+  VideoTimelineScreenState createState() => VideoTimelineScreenState();
 }
 
-class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
+class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
   int _itemCount = 4;
 
   final PageController _pageController = PageController();
@@ -58,23 +59,34 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      /// The distance from the child's top or bottom edgeOffset where the refresh indicator will settle.
-      displacement: 50,
-      /// The offset where RefreshProgressIndicator starts to appear on drag start.
-      edgeOffset: 20,
-      color: Theme.of(context).primaryColor,
-      onRefresh: _onRefresh,
-      child: PageView.builder(
-        controller: _pageController,
-        itemCount: _itemCount,
-        onPageChanged: _onPageChanged,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) => VideoPost(
-          onVideoFinished: _onVideoFinished,
-          index: index,
-        ),
-      ),
-    );
+    return ref.watch(timelineProvider).when(
+          data: (videos) => RefreshIndicator(
+            displacement: 50,
+            edgeOffset: 20,
+            color: Theme.of(context).primaryColor,
+            onRefresh: _onRefresh,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: videos.length,
+              onPageChanged: _onPageChanged,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context, int index) => VideoPost(
+                onVideoFinished: _onVideoFinished,
+                index: index,
+              ),
+            ),
+          ),
+          error: (Object error, StackTrace stackTrace) => Center(
+            child: Text(
+              "Could not load videos: $error",
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+        );
   }
 }
