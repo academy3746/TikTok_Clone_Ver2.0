@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "152102349820",
+    "project_id": "dio-tik-tok-clone",
+    "storage_bucket": "dio-tik-tok-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152102349820:android:54d0caf1d2e55a1391e079",
+        "android_client_info": {
+          "package_name": "kr.jonghyun.tiktok"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmnu6C0ydAhExjw0a9-68W15csOJ-yXxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
