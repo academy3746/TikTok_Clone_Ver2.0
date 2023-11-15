@@ -1,20 +1,20 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
-import 'package:tiktok/features/onboarding/interest_screen.dart';
+import 'package:tiktok/features/auth/view_models/sign_up_vm.dart';
 
-class BirthdayScreen extends StatefulWidget {
+class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({Key? key}) : super(key: key);
 
   @override
-  State<BirthdayScreen> createState() => _BirthdayScreenState();
+  BirthdayScreenState createState() => BirthdayScreenState();
 }
 
-class _BirthdayScreenState extends State<BirthdayScreen> {
+class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
   DateTime initialDate = DateTime.now();
@@ -32,7 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    context.goNamed(InterestScreen.routeName);
+    ref.read(signUpProvider.notifier).signUp();
   }
 
   void _onScaffoldTap() {
@@ -100,7 +100,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               Gaps.v28,
               GestureDetector(
                 onTap: _onNextTap,
-                child: const FormButton(disabled: false),
+                child: FormButton(
+                  disabled: ref.read(signUpProvider).isLoading,
+                ),
               ),
             ],
           ),
