@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tiktok/features/auth/repo/auth_repo.dart';
 import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -57,7 +59,7 @@ class SettingsScreen extends ConsumerWidget {
               applicationLegalese: "All rights reserved by Jonghyun Lee.",
             ),
             ListTile(
-              title: const Text("Logout (IOS)"),
+              title: const Text("Logout"),
               textColor: Theme.of(context).primaryColor,
               onTap: () {
                 showCupertinoDialog(
@@ -73,60 +75,10 @@ class SettingsScreen extends ConsumerWidget {
                       CupertinoDialogAction(
                         isDestructiveAction: true,
                         child: const Text("YES"),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Logout (AOS)"),
-              textColor: Colors.blue,
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text("Are you sure?"),
-                    content: const Text("Please, do not leave us~!"),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("NO"),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("YES"),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text("Logout (IOS / BOTTOM / DISMISS)"),
-              textColor: Theme.of(context).primaryColor,
-              onTap: () {
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) => CupertinoActionSheet(
-                    title: Text(
-                      "Are you sure?",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    message: const Text("Please, don't leave us!"),
-                    actions: [
-                      CupertinoActionSheetAction(
-                        isDefaultAction: true,
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("I'll stay"),
-                      ),
-                      CupertinoActionSheetAction(
-                        isDestructiveAction: true,
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text("I'll leave"),
+                        onPressed: () {
+                          ref.read(authRepo).signOut();
+                          context.go("/");
+                        },
                       ),
                     ],
                   ),
