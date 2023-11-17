@@ -34,7 +34,7 @@ class LoginViewModel extends AsyncNotifier {
       }
     } else {
       if (context.mounted) {
-        context.go(SignUpScreen.routeName);
+        context.go(SignUpScreen.routeURL);
       }
     }
   }

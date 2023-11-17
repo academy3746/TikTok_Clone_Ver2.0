@@ -77,6 +77,7 @@ class TikTokApp extends ConsumerWidget {
           iconColor: Colors.black,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        useMaterial3: false,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
