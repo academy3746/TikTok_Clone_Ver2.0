@@ -10,7 +10,7 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
 
   @override
   FutureOr<UserProfileModel> build() {
-    ref.read(userRepo);
+    _repository = ref.read(userRepo);
 
     return UserProfileModel.empty();
   }

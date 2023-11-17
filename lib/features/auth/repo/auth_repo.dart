@@ -8,9 +8,7 @@ class AuthenticationRepository {
 
   bool get isLoggedIn => user != null;
 
-  Stream<User?> authStateChanges() {
-    return _firebaseAuth.authStateChanges();
-  }
+  Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
   Future<UserCredential> signUp(String email, String password) async {
     return _firebaseAuth.createUserWithEmailAndPassword(

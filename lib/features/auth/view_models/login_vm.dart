@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok/features/auth/repo/auth_repo.dart';
 import 'package:tiktok/utility.dart';
 
-class LoginViewModel extends AsyncNotifier {
+class LoginViewModel extends AsyncNotifier<void> {
   late final AuthenticationRepository _repository;
 
   @override
@@ -14,17 +14,14 @@ class LoginViewModel extends AsyncNotifier {
   }
 
   Future<void> login(
-      String email,
-      String password,
-      BuildContext context,
-      ) async {
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     state = const AsyncValue.loading();
 
     state = await AsyncValue.guard(
-          () async => await _repository.signIn(
-        email,
-        password,
-      ),
+      () async => await _repository.signIn(email, password),
     );
 
     if (state.hasError) {
@@ -40,5 +37,5 @@ class LoginViewModel extends AsyncNotifier {
 }
 
 final loginProvider = AsyncNotifierProvider<LoginViewModel, void>(
-      () => LoginViewModel(),
+  () => LoginViewModel(),
 );
