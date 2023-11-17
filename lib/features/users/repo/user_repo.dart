@@ -6,9 +6,16 @@ class UserRepository {
   /// Initialize Firebase Database Storage
   final FirebaseFirestore _database = FirebaseFirestore.instance;
 
-  /// Create User Profile
+  /// INSERT INTO `g5_member` (key1, key2, ...) VALUES(${value1}, ${value2}, ...)
   Future<void> createProfile(UserProfileModel account) async {
-    await _database.collection("users").doc(account.uid).set(account.toJson());
+    await _database.collection("g5_member").doc(account.uid).set(account.toJson());
+  }
+
+  /// SELECT * FROM `g5_member` WHERE uid = ${uid}
+  Future<Map<String, dynamic>?> findProfile(String uid) async {
+    final doc = await _database.collection("g5_member").doc(uid).get();
+
+    return doc.data();
   }
 }
 

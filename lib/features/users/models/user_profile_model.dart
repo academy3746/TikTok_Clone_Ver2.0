@@ -33,4 +33,12 @@ class UserProfileModel {
       "birthday": birthday
     };
   }
+
+  UserProfileModel.fromJson(Map<String, dynamic> json)
+      : uid = json["uid"],
+        name = json["name"],
+        email = json["email"],
+        bio = json["bio"],
+        link = json["link"],
+        birthday = json["birthday"];
 }
