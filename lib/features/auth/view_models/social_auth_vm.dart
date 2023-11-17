@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok/features/auth/repo/auth_repo.dart';
 import 'package:tiktok/utility.dart';
 
-class LoginViewModel extends AsyncNotifier {
+class SocialAuthViewModel extends AsyncNotifier {
   late final AuthenticationRepository _repository;
 
   @override
@@ -13,18 +14,11 @@ class LoginViewModel extends AsyncNotifier {
     _repository = ref.read(authRepo);
   }
 
-  Future<void> login(
-      String email,
-      String password,
-      BuildContext context,
-      ) async {
+  Future<void> githubLogin(BuildContext context) async {
     state = const AsyncValue.loading();
 
     state = await AsyncValue.guard(
-          () async => await _repository.signIn(
-        email,
-        password,
-      ),
+      () async => await _repository.githubLogin(),
     );
 
     if (state.hasError) {
@@ -39,6 +33,6 @@ class LoginViewModel extends AsyncNotifier {
   }
 }
 
-final loginProvider = AsyncNotifierProvider<LoginViewModel, void>(
-      () => LoginViewModel(),
+final socialProvider = AsyncNotifierProvider<SocialAuthViewModel, void>(
+  () => SocialAuthViewModel(),
 );

@@ -1,88 +1,59 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
-import 'package:tiktok/features/auth/password_screen.dart';
-import 'package:tiktok/features/auth/view_models/sign_up_vm.dart';
+import 'package:tiktok/features/auth/views/email_screen.dart';
 
-class EmailScreenArgs {
-  final String username;
-
-  EmailScreenArgs({required this.username});
-}
-
-class EmailScreen extends ConsumerStatefulWidget {
-  final String username;
-
-  const EmailScreen({
-    Key? key,
-    required this.username,
-  }) : super(key: key);
+class UsernameScreen extends StatefulWidget {
+  const UsernameScreen({Key? key}) : super(key: key);
 
   @override
-  EmailScreenState createState() => EmailScreenState();
+  State<UsernameScreen> createState() => _UsernameScreenState();
 }
 
-class EmailScreenState extends ConsumerState<EmailScreen> {
-  final TextEditingController _emailController = TextEditingController();
+class _UsernameScreenState extends State<UsernameScreen> {
+  final TextEditingController _usernameController = TextEditingController();
 
-  String _email = "";
+  String _username = "";
 
   @override
   void initState() {
     super.initState();
-    _emailController.addListener(() {
+    _usernameController.addListener(() {
       setState(() {
-        _email = _emailController.text;
+        _username = _usernameController.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
-  String? _isEmailValid() {
-    if (_email.isEmpty) return null;
-    // Validation here
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return "Invalid E-mail address!";
-    }
-    return null;
+  void _onNextTap() {
+    if (_username.isEmpty) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => EmailScreen(username: _username),
+      ),
+    );
   }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
-  void _onSubmit() {
-    if (_email.isEmpty || _isEmailValid() != null) return;
-
-    ref.read(signUpForm.notifier).state = {"email": _email};
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PasswordScreen(),
-      ),
-    );
-  }
-
   void _onClearTap() {
-    _emailController.clear();
+    _usernameController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    //final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
-
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
@@ -99,22 +70,27 @@ class EmailScreenState extends ConsumerState<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              Text(
-                "What is your E-mail, ${widget.username}?",
-                style: const TextStyle(
+              const Text(
+                "Create Username",
+                style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              Gaps.v8,
+              const Text(
+                "You can always change this later.",
+                style: TextStyle(
+                  fontSize: Sizes.size16,
+                  color: Colors.black54,
+                ),
+              ),
               Gaps.v16,
               TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                onEditingComplete: _onSubmit,
-                autocorrect: false,
+                controller: _usernameController,
+                onEditingComplete: _onNextTap,
                 decoration: InputDecoration(
-                  hintText: "E-mail",
-                  errorText: _isEmailValid(),
+                  hintText: "Username",
                   suffix: GestureDetector(
                     onTap: _onClearTap,
                     child: FaIcon(
@@ -138,9 +114,8 @@ class EmailScreenState extends ConsumerState<EmailScreen> {
               ),
               Gaps.v28,
               GestureDetector(
-                onTap: _onSubmit,
-                child: FormButton(
-                    disabled: _email.isEmpty || _isEmailValid() != null),
+                onTap: _onNextTap,
+                child: FormButton(disabled: _username.isEmpty),
               ),
             ],
           ),

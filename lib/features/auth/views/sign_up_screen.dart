@@ -1,16 +1,18 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/common/auth_button.dart';
-import 'package:tiktok/features/auth/login_screen.dart';
-import 'package:tiktok/features/auth/username_screen.dart';
-import '../../utility.dart';
+import 'package:tiktok/features/auth/view_models/social_auth_vm.dart';
+import 'package:tiktok/features/auth/views/login_screen.dart';
+import 'package:tiktok/features/auth/views/username_screen.dart';
+import '../../../utility.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerWidget {
   static String routeURL = "/";
   static String routeName = "signUp";
 
@@ -30,7 +32,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return OrientationBuilder(
       builder: (BuildContext context, Orientation orientation) {
         print(orientation);
@@ -73,10 +75,13 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     Gaps.v16,
-                    const AuthButton(
-                      text: "Continue with Apple",
-                      icon: FaIcon(
-                        FontAwesomeIcons.apple,
+                    GestureDetector(
+                      onTap: () => ref.read(socialProvider.notifier).githubLogin(context),
+                      child: const AuthButton(
+                        text: "Continue with Github",
+                        icon: FaIcon(
+                          FontAwesomeIcons.github,
+                        ),
                       ),
                     ),
                   ],
