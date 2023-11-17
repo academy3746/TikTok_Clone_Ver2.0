@@ -31,8 +31,15 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
     super.dispose();
   }
 
-  void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp(context);
+  Future<void> _onNextTap() async {
+    final state = ref.read(signUpForm.notifier).state;
+
+    ref.read(signUpForm.notifier).state = {
+      "birthday": _birthdayController.text,
+      ...state,
+    };
+
+    await ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _onScaffoldTap() {
