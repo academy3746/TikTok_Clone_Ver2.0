@@ -5,7 +5,7 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/settings/settings_screen.dart';
 import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
 
-import '../../constants/sizes.dart';
+import '../../../constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
