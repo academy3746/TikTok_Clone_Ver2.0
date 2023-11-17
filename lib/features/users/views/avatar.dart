@@ -23,8 +23,6 @@ class UserAvatar extends ConsumerWidget {
 
     if (xFile != null) {
       final uploadFile = File(xFile.path);
-    } else {
-      const NetworkImage("https://avatars.githubusercontent.com/u/107133642?v=4");
     }
   }
 
