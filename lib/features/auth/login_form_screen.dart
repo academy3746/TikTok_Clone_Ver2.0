@@ -1,22 +1,21 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/auth/common/form_button.dart';
-
+import 'package:tiktok/features/auth/view_models/login_vm.dart';
 import '../../constants/sizes.dart';
-import '../onboarding/interest_screen.dart';
 
-class LoginFormScreen extends StatefulWidget {
+class LoginFormScreen extends ConsumerStatefulWidget {
   const LoginFormScreen({super.key});
 
   @override
-  State<LoginFormScreen> createState() => _LoginFormScreenState();
+  LoginFormScreenState createState() => LoginFormScreenState();
 }
 
-class _LoginFormScreenState extends State<LoginFormScreen> {
+class LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Map<String, String> formData = {};
@@ -32,8 +31,15 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
       if (_formKey.currentState!.validate()) {
         /// validate method returns true or false.
         _formKey.currentState!.save();
+
+        ref.read(loginProvider.notifier).login(
+              formData["email"]!,
+              formData["password"]!,
+              context,
+            );
+
         /// 중첩된 이전 화면들을 스택에서 삭제
-        context.goNamed(InterestScreen.routeName);
+        //context.goNamed(InterestScreen.routeName);
       }
     }
   }
@@ -133,7 +139,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                 Gaps.v28,
                 GestureDetector(
                   onTap: _onSubmitTap,
-                  child: const FormButton(disabled: false),
+                  child: FormButton(
+                    disabled: ref.watch(loginProvider).isLoading,
+                  ),
                 ),
               ],
             ),

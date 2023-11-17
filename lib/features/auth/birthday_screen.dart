@@ -32,7 +32,7 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _onScaffoldTap() {
@@ -101,7 +101,7 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
               GestureDetector(
                 onTap: _onNextTap,
                 child: FormButton(
-                  disabled: ref.read(signUpProvider).isLoading,
+                  disabled: ref.watch(signUpProvider).isLoading,
                 ),
               ),
             ],
