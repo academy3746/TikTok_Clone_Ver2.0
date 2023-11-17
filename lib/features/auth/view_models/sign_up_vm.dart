@@ -33,7 +33,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
       }
     } else {
       if (context.mounted) {
-        context.goNamed(InterestScreen.routeName);
+        context.goNamed(InterestScreen.routeURL);
       }
     }
   }
