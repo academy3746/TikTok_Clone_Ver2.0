@@ -66,7 +66,11 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               Gaps.v20,
 
                               /// User Profile Image
-                              UserAvatar(name: data.name),
+                              UserAvatar(
+                                name: data.name,
+                                hasAvatar: data.hasAvatar,
+                                uid: data.uid,
+                              ),
                               Gaps.v20,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

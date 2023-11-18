@@ -27,6 +27,11 @@ class UserRepository {
 
     await fileRef.putFile(file);
   }
+
+  /// UPDATE `g5_member` WHERE uid = ${uid}
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _database.collection("g5_member").doc(uid).update(data);
+  }
 }
 
 final userRepo = Provider((ref) => UserRepository());

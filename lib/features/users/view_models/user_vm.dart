@@ -17,7 +17,8 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     _authRepository = ref.read(authRepo);
 
     if (_authRepository.isLoggedIn) {
-      final profile = await _userRepository.findProfile(_authRepository.user!.uid);
+      final profile =
+          await _userRepository.findProfile(_authRepository.user!.uid);
 
       if (profile != null) {
         return UserProfileModel.fromJson(profile);
@@ -32,6 +33,7 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
     String email = "",
     String name = "",
     String birthday = "",
+    bool hasAvatar = false,
   }) async {
     state = const AsyncValue.loading();
 
@@ -42,11 +44,21 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
       bio: "Undefined",
       link: "Undefined",
       birthday: birthday,
+      hasAvatar: hasAvatar,
     );
 
     await _userRepository.createProfile(account);
 
     state = AsyncValue.data(account);
+  }
+
+  Future<void> onAvatarUpload() async {
+    /// Null Check
+    if (state.value == null) return;
+
+    state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
+
+    await _userRepository.updateUser(state.value!.uid, {"hasAvatar:": true});
   }
 }
 
