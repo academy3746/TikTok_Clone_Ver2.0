@@ -7,6 +7,7 @@ import 'package:tiktok/features/settings/settings_screen.dart';
 import 'package:tiktok/features/users/view_models/user_vm.dart';
 import 'package:tiktok/features/users/views/avatar.dart';
 import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
+import 'package:tiktok/features/users/widgets/update_profile.dart';
 import '../../../constants/sizes.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -32,6 +33,12 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     );
   }
 
+  void _onEditPressed({required String bio, required String link}) {
+    Navigator.of(context).push(
+      UpdateProfile.route(bio: bio, link: link),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -51,6 +58,13 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         SliverAppBar(
                           title: Text(data.name),
                           actions: [
+                            IconButton(
+                              onPressed: () => _onEditPressed(
+                                bio: data.bio,
+                                link: data.link,
+                              ),
+                              icon: const Icon(Icons.edit_note),
+                            ),
                             IconButton(
                               onPressed: _onGearPressed,
                               icon: const FaIcon(
@@ -198,27 +212,27 @@ class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                                 ),
                               ),
                               Gaps.v14,
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size32,
                                 ),
                                 child: Text(
-                                  "Holy diver! You've been down too long in the midnight sea! Oh, what's be coming of me!",
+                                  data.bio,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                               Gaps.v14,
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  FaIcon(
+                                  const FaIcon(
                                     FontAwesomeIcons.link,
                                     size: Sizes.size12,
                                   ),
                                   Gaps.h4,
                                   Text(
-                                    "https://github.com/academy3746",
-                                    style: TextStyle(
+                                    data.link,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
