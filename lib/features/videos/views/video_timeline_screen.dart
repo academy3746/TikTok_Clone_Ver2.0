@@ -70,10 +70,15 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
               itemCount: videos.length,
               onPageChanged: _onPageChanged,
               scrollDirection: Axis.vertical,
-              itemBuilder: (BuildContext context, int index) => VideoPost(
-                onVideoFinished: _onVideoFinished,
-                index: index,
-              ),
+              itemBuilder: (BuildContext context, int index) {
+                final videoData = videos[index];
+
+                return VideoPost(
+                  onVideoFinished: _onVideoFinished,
+                  index: index,
+                  videoData: videoData,
+                );
+              }
             ),
           ),
           error: (Object error, StackTrace stackTrace) => Center(

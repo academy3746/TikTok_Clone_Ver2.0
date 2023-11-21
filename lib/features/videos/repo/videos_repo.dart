@@ -11,7 +11,8 @@ class VideosRepository {
 
   /// 1. Upload Video File
   UploadTask uploadVideoFile(File videoFile, String uid) {
-    final videoRef = _storage.ref().child("/videos/$uid/${DateTime.now().millisecondsSinceEpoch.toString()}");
+    final videoRef = _storage.ref().child(
+        "/videos/$uid/${DateTime.now().millisecondsSinceEpoch.toString()}");
 
     return videoRef.putFile(videoFile);
   }
@@ -19,6 +20,11 @@ class VideosRepository {
   /// 2. Create Video Document
   Future<void> saveVideo(VideoModel data) async {
     await _db.collection("videos").add(data.toJson());
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos() {
+    /// SELECT * FROM `videos` WHERE (1) ORDER BY datetime DESC
+    return _db.collection("videos").orderBy("datetime", descending: true).get();
   }
 }
 
