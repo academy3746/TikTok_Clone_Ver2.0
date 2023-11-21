@@ -16,32 +16,43 @@ import * as admin from "firebase-admin";
 // https://firebase.google.com/docs/functions/typescript
 
 export const helloWorld = onRequest((request, response) => {
-  logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
+    logger.info("Hello logs!", {structuredData: true});
+    response.send("Hello from Firebase!");
 });
 
 admin.initializeApp();
 
 export const onVideoCreated = functions.firestore.document("videos/{videoId}").onCreate(async (snapshot, context) => {
-  const spawn = require("child-process-promise").spawn;
+    const spawn = require("child-process-promise").spawn;
 
-  const video = snapshot.data();
+    const video = snapshot.data();
 
-  await spawn("ffmpeg", [
-    "-i",
-    video.fileUrl,
-    "-ss",
-    "00:00:01.000",
-    "-vframes",
-    "1",
-    "-vf",
-    "scale=150:-1",
-    `/tmp/${snapshot.id}.jpg`,
-  ]);
+    await spawn("ffmpeg", [
+        "-i",
+        video.fileUrl,
+        "-ss",
+        "00:00:01.000",
+        "-vframes",
+        "1",
+        "-vf",
+        "scale=150:-1",
+        `/tmp/${snapshot.id}.jpg`,
+    ]);
 
-  const storage = admin.storage();
+    const storage = admin.storage();
 
-  await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
-    destination: `thumbnails/${snapshot.id}.jpg`,
-  });
+    const [file, _] = await storage.bucket().upload(`/tmp/${snapshot.id}.jpg`, {
+        destination: `thumbnails/${snapshot.id}.jpg`,
+    });
+
+    await file.makePublic();
+
+    await snapshot.ref.update({"thumbUrl": file.publicUrl()});
+
+    const db = admin.firestore();
+
+    await db.collection("g5_member").doc(video.creatorUid).collection("videos").doc(snapshot.id).set({
+        thumbUrl: file.publicUrl(),
+        videoId: snapshot.id
+    });
 });
