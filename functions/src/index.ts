@@ -20,6 +20,8 @@ export const helloWorld = onRequest((request, response) => {
   response.send("Hello from Firebase!");
 });
 
+admin.initializeApp();
+
 export const onVideoCreated = functions.firestore.document("videos/{videoId}").onCreate(async (snapshot, context) => {
   const spawn = require("child-process-promise").spawn;
 
