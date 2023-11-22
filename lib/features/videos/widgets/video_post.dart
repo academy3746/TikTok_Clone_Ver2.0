@@ -8,6 +8,7 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/videos/models/video_model.dart';
 import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
+import 'package:tiktok/features/videos/view_models/video_post_vm.dart';
 import 'package:tiktok/features/videos/widgets/video_button.dart';
 import 'package:tiktok/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -47,8 +48,16 @@ class VideoPostState extends ConsumerState<VideoPost>
   late final AnimationController _animationController;
 
   void _onVideoFinished() {
-    /// 다음 비디오로 넘어가지 말고 현재 화면에 머무를 것..
-    return;
+    if (_videoPlayerController.value.isInitialized) {
+      if (_videoPlayerController.value.duration ==
+          _videoPlayerController.value.position) {
+        widget.onVideoFinished();
+      }
+    }
+  }
+
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -273,9 +282,12 @@ class VideoPostState extends ConsumerState<VideoPost>
                   onTap: () => _onVolumeTap(),
                 ),
                 Gaps.v16,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: "${widget.videoData.likes}",
+                GestureDetector(
+                  onTap: _onLikeTap,
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: "${widget.videoData.likes}",
+                  ),
                 ),
                 Gaps.v24,
                 GestureDetector(

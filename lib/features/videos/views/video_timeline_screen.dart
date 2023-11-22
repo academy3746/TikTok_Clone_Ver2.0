@@ -52,13 +52,9 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
     super.dispose();
   }
 
-  Future<void> _onRefresh() async {
-    /// Fake Indicator (원래는 API를 받아야 함...)
-    return Future.delayed(
-      const Duration(
-        seconds: 3,
-      ),
-    );
+  /// 페이지 새로고침
+  Future<void> _onRefresh() async{
+    return await ref.watch(timelineProvider.notifier).refresh();
   }
 
   @override
