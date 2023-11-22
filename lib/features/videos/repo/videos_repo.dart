@@ -22,9 +22,17 @@ class VideosRepository {
     await _db.collection("videos").add(data.toJson());
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos() {
-    /// SELECT * FROM `videos` WHERE (1) ORDER BY datetime DESC
-    return _db.collection("videos").orderBy("datetime", descending: true).get();
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos(
+      {int? lastItemDatetime}) {
+    /// SELECT * FROM `videos` WHERE (1) LIMIT 0, 1 ORDER BY datetime DESC
+    final query =
+        _db.collection("videos").orderBy("datetime", descending: true).limit(2);
+
+    if (lastItemDatetime == null) {
+      return query.get();
+    } else {
+      return query.limit(2).startAfter([lastItemDatetime]).get();
+    }
   }
 }
 
