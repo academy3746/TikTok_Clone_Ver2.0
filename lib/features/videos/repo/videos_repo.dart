@@ -36,10 +36,16 @@ class VideosRepository {
   }
 
   Future<void> likeVideo(String videoId, String userId) async {
-    await _db.collection("likes").add({
-      "videoId": videoId,
-      "userId": userId,
-    });
+    final query = _db.collection("likes").doc("${videoId}000$userId");
+
+    final like = await query.get();
+
+    /// LikeIt 은 한 번만 가능 하도록...
+    if (!like.exists) {
+      await query.set(
+        {"datetime": DateTime.now().millisecondsSinceEpoch},
+      );
+    }
   }
 }
 
