@@ -43,6 +43,10 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   bool _isMuted = false;
 
+  bool _isLiked = false;
+
+  int likes = 0;
+
   final Duration _animationDuration = const Duration(milliseconds: 300);
 
   late final AnimationController _animationController;
@@ -58,9 +62,14 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   void _onLikeTap() {
     ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+
+    setState(() {
+      _isLiked ? likes-- : likes++;
+      _isLiked = !_isLiked;
+    });
   }
 
-  void _initVideoPlayer() async {
+  Future<void> _initVideoPlayer() async {
     _videoPlayerController =
         VideoPlayerController.asset("assets/videos/video01.mp4");
 
@@ -73,6 +82,8 @@ class VideoPostState extends ConsumerState<VideoPost>
     }
 
     _videoPlayerController.addListener(_onVideoFinished);
+
+    _isLiked = await ref.read(videoPostProvider(widget.videoData.id).notifier).isLikedVideo();
 
     setState(() {});
   }
@@ -161,6 +172,8 @@ class VideoPostState extends ConsumerState<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    likes = widget.videoData.likes;
   }
 
   @override
@@ -286,7 +299,8 @@ class VideoPostState extends ConsumerState<VideoPost>
                   onTap: _onLikeTap,
                   child: VideoButton(
                     icon: FontAwesomeIcons.solidHeart,
-                    text: "${widget.videoData.likes}",
+                    text: "$likes",
+                    isLiked: _isLiked,
                   ),
                 ),
                 Gaps.v24,
