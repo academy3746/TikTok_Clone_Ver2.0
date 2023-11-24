@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/auth/repo/auth_repo.dart';
 import 'package:tiktok/features/videos/models/video_model.dart';
 import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
 import 'package:tiktok/features/videos/view_models/video_post_vm.dart';
@@ -57,7 +58,11 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _onLikeTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+    ref
+        .read(videoPostProvider(
+                "${widget.videoData.id}000${ref.read(authRepo).user!.uid}")
+            .notifier)
+        .likeVideo();
   }
 
   void _initVideoPlayer() async {
@@ -173,140 +178,150 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return VisibilityDetector(
-      key: Key("${widget.index}"),
-      onVisibilityChanged: _onVisibilityChanged,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: _videoPlayerController.value.isInitialized
-                ? VideoPlayer(_videoPlayerController)
-                : Image.network(
-                    widget.videoData.thumbUrl,
-                    fit: BoxFit.cover,
-                  ),
-          ),
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: _onTogglePause,
-            ),
-          ),
-          Positioned.fill(
-            child: IgnorePointer(
-              child: Center(
-                /// 2안: Use AnimatedBuilder Widget
-                child: AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (BuildContext context, Widget? child) {
-                    return Transform.scale(
-                      scale: _animationController.value,
+  Widget build(BuildContext context) => ref
+      .watch(videoPostProvider(
+          "${widget.videoData.id}000${ref.read(authRepo).user!.uid}"))
+      .when(
+        data: (like) => VisibilityDetector(
+          key: Key("${widget.index}"),
+          onVisibilityChanged: _onVisibilityChanged,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: _videoPlayerController.value.isInitialized
+                    ? VideoPlayer(_videoPlayerController)
+                    : Image.network(
+                  widget.videoData.thumbUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned.fill(
+                child: GestureDetector(
+                  onTap: _onTogglePause,
+                ),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Center(
+                    /// 2안: Use AnimatedBuilder Widget
+                    child: AnimatedBuilder(
+                      animation: _animationController,
+                      builder: (BuildContext context, Widget? child) {
+                        return Transform.scale(
+                          scale: _animationController.value,
 
-                      /// This child is AnimatedOpacity
-                      child: child,
-                    );
-                  },
-                  child: AnimatedOpacity(
-                    opacity: _isPaused ? 1 : 0,
-                    duration: _animationDuration,
-                    child: const FaIcon(
-                      FontAwesomeIcons.play,
-                      color: Colors.white,
-                      size: Sizes.size52,
+                          /// This child is AnimatedOpacity
+                          child: child,
+                        );
+                      },
+                      child: AnimatedOpacity(
+                        opacity: _isPaused ? 1 : 0,
+                        duration: _animationDuration,
+                        child: const FaIcon(
+                          FontAwesomeIcons.play,
+                          color: Colors.white,
+                          size: Sizes.size52,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-          Positioned(
-            top: Sizes.size30,
-            left: Sizes.size20,
-            child: IconButton(
-              onPressed: _onPlaybackConfigChanged,
-              icon: FaIcon(
-                ref.watch(playbackConfigProvider).muted
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "@${widget.videoData.creator}",
-                  style: const TextStyle(
-                    fontSize: Sizes.size20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Gaps.v10,
-                Text(
-                  widget.videoData.description,
-                  style: const TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            right: 10,
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage(
-                    "https://firebasestorage.googleapis.com/v0/b/dio-tik-tok-clone.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media",
-                  ),
-                  child: Text(widget.videoData.creator),
-                ),
-                Gaps.v16,
-                GestureDetector(
-                  child: VideoButton(
-                    icon: _isMuted
-                        ? FontAwesomeIcons.volumeXmark
+              Positioned(
+                top: Sizes.size30,
+                left: Sizes.size20,
+                child: IconButton(
+                  onPressed: _onPlaybackConfigChanged,
+                  icon: FaIcon(
+                    ref.watch(playbackConfigProvider).muted
+                        ? FontAwesomeIcons.volumeOff
                         : FontAwesomeIcons.volumeHigh,
-                    text: _isMuted ? "OFF" : "ON",
-                  ),
-                  onTap: () => _onVolumeTap(),
-                ),
-                Gaps.v16,
-                GestureDetector(
-                  onTap: _onLikeTap,
-                  child: VideoButton(
-                    icon: FontAwesomeIcons.solidHeart,
-                    text: "${widget.videoData.likes}",
+                    color: Colors.white,
                   ),
                 ),
-                Gaps.v24,
-                GestureDetector(
-                  onTap: () => _onCommentsTap(context),
-                  child: VideoButton(
-                    icon: FontAwesomeIcons.solidComment,
-                    text: "${widget.videoData.comments}",
-                  ),
+              ),
+              Positioned(
+                bottom: 20,
+                left: 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "@${widget.videoData.creator}",
+                      style: const TextStyle(
+                        fontSize: Sizes.size20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Gaps.v10,
+                    Text(
+                      widget.videoData.description,
+                      style: const TextStyle(
+                        fontSize: Sizes.size16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                Gaps.v24,
-                const VideoButton(
-                  icon: FontAwesomeIcons.share,
-                  text: "Share",
+              ),
+              Positioned(
+                bottom: 20,
+                right: 10,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      foregroundImage: NetworkImage(
+                        "https://firebasestorage.googleapis.com/v0/b/dio-tik-tok-clone.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media",
+                      ),
+                      child: Text(widget.videoData.creator),
+                    ),
+                    Gaps.v16,
+                    GestureDetector(
+                      child: VideoButton(
+                        icon: _isMuted
+                            ? FontAwesomeIcons.volumeXmark
+                            : FontAwesomeIcons.volumeHigh,
+                        text: _isMuted ? "OFF" : "ON",
+                      ),
+                      onTap: () => _onVolumeTap(),
+                    ),
+                    Gaps.v16,
+                    GestureDetector(
+                      onTap: _onLikeTap,
+                      child: VideoButton(
+                        icon: FontAwesomeIcons.solidHeart,
+                        text: "${like.likeCount}",
+                        color: like.isVideoLiked ? Theme.of(context).primaryColor : Colors.white,
+                      ),
+                    ),
+                    Gaps.v24,
+                    GestureDetector(
+                      onTap: () => _onCommentsTap(context),
+                      child: VideoButton(
+                        icon: FontAwesomeIcons.solidComment,
+                        text: "${widget.videoData.comments}",
+                      ),
+                    ),
+                    Gaps.v24,
+                    const VideoButton(
+                      icon: FontAwesomeIcons.share,
+                      text: "Share",
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        error: (error, stackTrace) => const Center(
+          child: Text("Could not load videos!", style: TextStyle(color: Colors.white,),),
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
+      );
 }

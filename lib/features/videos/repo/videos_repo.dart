@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok/features/videos/models/video_liked_model.dart';
 import 'package:tiktok/features/videos/models/video_model.dart';
 
 class VideosRepository {
@@ -35,7 +36,29 @@ class VideosRepository {
     }
   }
 
-  Future<void> likeVideo(String videoId, String userId) async {
+  Future<VideoLikedModel> isLiked(String videoId, String userId) async {
+    final likeQuery = _db.collection("likes").doc("${videoId}000$userId");
+
+    final videoQuery = _db.collection("videos").doc(videoId);
+
+    final like = await likeQuery.get();
+
+    final video = await videoQuery.get();
+
+    final videoData = video.data();
+
+    final VideoModel model = VideoModel.fromJson(
+      json: videoData!,
+      videoId: videoId,
+    );
+
+    return VideoLikedModel(
+      isVideoLiked: like.exists,
+      likeCount: model.likes,
+    );
+  }
+
+  Future<bool> likeVideo(String videoId, String userId) async {
     final query = _db.collection("likes").doc("${videoId}000$userId");
 
     final like = await query.get();
@@ -45,8 +68,12 @@ class VideosRepository {
       await query.set(
         {"datetime": DateTime.now().millisecondsSinceEpoch},
       );
+
+      return false;
     } else {
       await query.delete();
+
+      return true;
     }
   }
 }
