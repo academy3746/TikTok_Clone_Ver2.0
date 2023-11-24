@@ -56,3 +56,29 @@ export const onVideoCreated = functions.firestore.document("videos/{videoId}").o
         videoId: snapshot.id
     });
 });
+
+export const onLikedCreated = functions.firestore.document("/likes/{likeId}").onCreate(async (snapshot, context) => {
+    const db = admin.firestore();
+
+    const [videoId, userId] = snapshot.id.split("000");
+
+    await db.collection("videos").doc(videoId).update({
+        likes: admin.firestore.FieldValue.increment(1),
+    });
+
+    await db.collection("g5_member").doc(userId).collection("likes").doc(videoId).set({
+        datetime: Date.now()
+    });
+});
+
+export const onLikedRemoved = functions.firestore.document("/likes/{likeId}").onDelete(async (snapshot, context) => {
+    const db = admin.firestore();
+
+    const [videoId, userId] = snapshot.id.split("000");
+
+    await db.collection("videos").doc(videoId).update({
+        likes: admin.firestore.FieldValue.increment(-1),
+    });
+
+    await db.collection("g5_member").doc(userId).collection("likes").doc(videoId).delete();
+});
