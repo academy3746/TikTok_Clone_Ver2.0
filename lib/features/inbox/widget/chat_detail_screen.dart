@@ -1,12 +1,15 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/inbox/view_models/dm_vm.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
+
   static const String routeURL = ":chatId";
 
   final String chatId;
@@ -17,10 +20,10 @@ class ChatDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ChatDetailScreenState createState() => ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   final TextEditingController _textEditingController = TextEditingController();
 
   String _submitChat = "";
@@ -36,9 +39,13 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   }
 
   void _onChatSubmitted() {
-    if (_submitChat != "") {
-      print(_submitChat);
+    if (_submitChat == "") {
+      return;
+    } else {
+      ref.read(dmProvider.notifier).sendDM(_submitChat);
+
       _textEditingController.clear();
+
       _onStopChat();
     }
   }
@@ -55,6 +62,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(dmProvider).isLoading;
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
@@ -222,7 +231,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     ),
                     Gaps.h20,
                     GestureDetector(
-                      onTap: _onChatSubmitted,
+                      onTap: isLoading ? null : _onChatSubmitted,
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
