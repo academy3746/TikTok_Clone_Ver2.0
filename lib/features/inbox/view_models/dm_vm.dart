@@ -36,12 +36,12 @@ final dmProvider = AsyncNotifierProvider<DirectMessageViewModel, void>(
   () => DirectMessageViewModel(),
 );
 
-final chatProvider = StreamProvider<List<MessageModel>>((ref) {
+final chatProvider = StreamProvider.autoDispose<List<MessageModel>>((ref) {
   final db = FirebaseFirestore.instance;
 
   return db
       .collection("chat_rooms")
-      .doc("bmItwGjK4PqmHHb2yjz6")
+      .doc("O8ZTRE9RnjCCSwSe98lk")
       .collection("texts")
       .orderBy("datetime")
       .snapshots()

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/auth/repo/auth_repo.dart';
 import 'package:tiktok/features/inbox/view_models/dm_vm.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
@@ -41,13 +42,13 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   void _onChatSubmitted() {
     if (_submitChat == "") {
       return;
-    } else {
-      ref.read(dmProvider.notifier).sendDM(_submitChat);
-
-      _textEditingController.clear();
-
-      _onStopChat();
     }
+
+    ref.read(dmProvider.notifier).sendDM(_submitChat);
+
+    _textEditingController.clear();
+
+    _onStopChat();
   }
 
   void _onStopChat() {
@@ -128,56 +129,75 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         onTap: _onStopChat,
         child: Stack(
           children: [
-            ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.size20,
-                horizontal: Sizes.size16,
-              ),
-              itemBuilder: (context, index) {
-                // Just for fake DM
-                final isMine = index % 2 == 0;
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment:
-                      isMine ? MainAxisAlignment.end : MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(
-                        Sizes.size14,
+            ref.watch(chatProvider).when(
+                  data: (data) {
+                    return ListView.separated(
+                      reverse: false,
+                      padding: EdgeInsets.only(
+                        top: Sizes.size20,
+                        bottom: MediaQuery.of(context).padding.bottom + Sizes.size20,
+                        left: Sizes.size16,
+                        right: Sizes.size16,
                       ),
-                      decoration: BoxDecoration(
-                        color: isMine
-                            ? Colors.blueAccent
-                            : Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: const Radius.circular(
-                            Sizes.size20,
-                          ),
-                          topRight: const Radius.circular(
-                            Sizes.size20,
-                          ),
-                          bottomLeft: Radius.circular(
-                            isMine ? Sizes.size20 : Sizes.size5,
-                          ),
-                          bottomRight: Radius.circular(
-                            !isMine ? Sizes.size20 : Sizes.size5,
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        "Fuck me harder!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: Sizes.size16,
-                        ),
-                      ),
+                      itemBuilder: (context, index) {
+                        final message = data[index];
+
+                        final isMine =
+                            message.userId == ref.watch(authRepo).user!.uid;
+
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: isMine
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(
+                                Sizes.size14,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isMine
+                                    ? Colors.blueAccent
+                                    : Theme.of(context).primaryColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(
+                                    Sizes.size20,
+                                  ),
+                                  topRight: const Radius.circular(
+                                    Sizes.size20,
+                                  ),
+                                  bottomLeft: Radius.circular(
+                                    isMine ? Sizes.size20 : Sizes.size5,
+                                  ),
+                                  bottomRight: Radius.circular(
+                                    !isMine ? Sizes.size20 : Sizes.size5,
+                                  ),
+                                ),
+                              ),
+                              child: Text(
+                                message.text,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Sizes.size16,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => Gaps.v10,
+                      itemCount: data.length,
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) => Center(
+                    child: Text(
+                      error.toString(),
                     ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => Gaps.v10,
-              itemCount: 10,
-            ),
+                  ),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                ),
             Positioned(
               bottom: 0,
               width: MediaQuery.of(context).size.width,
@@ -203,7 +223,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(Sizes.size24),
-                                  topRight:Radius.circular(Sizes.size24),
+                                  topRight: Radius.circular(Sizes.size24),
                                   bottomRight: Radius.circular(Sizes.size24),
                                 ),
                                 borderSide: BorderSide.none,
@@ -236,13 +256,19 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: Sizes.size10,
-                            color: _submitChat.isNotEmpty ? Colors.blueAccent : Colors.grey.shade300,
+                            color: _submitChat.isNotEmpty
+                                ? Colors.blueAccent
+                                : Colors.grey.shade300,
                           ),
                           shape: BoxShape.circle,
-                          color: _submitChat.isNotEmpty ? Colors.blueAccent : Colors.grey.shade300,
+                          color: _submitChat.isNotEmpty
+                              ? Colors.blueAccent
+                              : Colors.grey.shade300,
                         ),
                         child: FaIcon(
-                          _submitChat.isNotEmpty ? FontAwesomeIcons.paperPlane : FontAwesomeIcons.solidPaperPlane,
+                          _submitChat.isNotEmpty
+                              ? FontAwesomeIcons.paperPlane
+                              : FontAwesomeIcons.solidPaperPlane,
                           color: Colors.white,
                           size: Sizes.size20,
                         ),
