@@ -6,18 +6,43 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/auth/repo/auth_repo.dart';
+import 'package:tiktok/features/inbox/models/chat_room_model.dart';
 import 'package:tiktok/features/inbox/view_models/dm_vm.dart';
+import 'package:tiktok/features/users/models/user_profile_model.dart';
+
+class ChatDetailScreenArgs {
+  final bool isFromChatList;
+
+  final UserProfileModel profile;
+
+  final ChatRoomModel chatRoom;
+
+  ChatDetailScreenArgs({
+    required this.isFromChatList,
+    required this.profile,
+    required this.chatRoom,
+  });
+}
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
 
-  static const String routeURL = ":chatId";
+  static const String routeURL = ":chatRoomId";
 
-  final String chatId;
+  final String chatRoomId;
+
+  final UserProfileModel profile;
+
+  final ChatRoomModel chatRoom;
+
+  final bool isFromChatList;
 
   const ChatDetailScreen({
     super.key,
-    required this.chatId,
+    required this.chatRoomId,
+    required this.profile,
+    required this.chatRoom,
+    required this.isFromChatList,
   });
 
   @override
@@ -44,7 +69,10 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       return;
     }
 
-    ref.read(dmProvider.notifier).sendDM(_submitChat);
+    ref.read(dmProvider.notifier).sendDM(
+          text: _submitChat,
+          chatRoomId: widget.chatRoomId,
+        );
 
     _textEditingController.clear();
 
@@ -58,6 +86,7 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
   @override
   void dispose() {
     _textEditingController.dispose();
+
     super.dispose();
   }
 
@@ -75,11 +104,19 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           leading: Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: Sizes.size24,
-                foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/107133642?v=4"),
-                child: Text("DIO"),
+                foregroundImage: widget.profile.hasAvatar
+                    ? NetworkImage(widget.isFromChatList
+                        ? "https://firebasestorage.googleapis.com/v0/b/dio-tik-tok-clone.appspot.com/o/avatars%2F${widget.chatRoom.listenerId}?alt=media"
+                        : "https://firebasestorage.googleapis.com/v0/b/dio-tik-tok-clone.appspot.com/o/avatars%2F${widget.profile.uid}?alt=media")
+                    : null,
+                child: Text(
+                  widget.isFromChatList
+                      ? "${widget.chatRoom.listenerName}"
+                      : widget.profile.name,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               SizedBox(
                 height: Sizes.size16,
@@ -101,7 +138,9 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             ],
           ),
           title: Text(
-            "Ronnie James Dio (${widget.chatId})",
+            widget.isFromChatList
+                ? "${widget.chatRoom.listenerName}"
+                : widget.profile.name,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
@@ -129,13 +168,14 @@ class ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
         onTap: _onStopChat,
         child: Stack(
           children: [
-            ref.watch(chatProvider).when(
+            ref.watch(chatProvider(widget.chatRoomId)).when(
                   data: (data) {
                     return ListView.separated(
                       reverse: false,
                       padding: EdgeInsets.only(
                         top: Sizes.size20,
-                        bottom: MediaQuery.of(context).padding.bottom + Sizes.size20,
+                        bottom: MediaQuery.of(context).padding.bottom +
+                            Sizes.size20,
                         left: Sizes.size16,
                         right: Sizes.size16,
                       ),

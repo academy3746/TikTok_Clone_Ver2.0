@@ -71,9 +71,16 @@ final routerProvider = Provider(
               name: ChatDetailScreen.routeName,
               path: ChatDetailScreen.routeURL,
               builder: (BuildContext context, GoRouterState state) {
-                final chatId = state.params["chatId"]!;
+                final chatRoomId = state.params["chatRoomId"]!;
 
-                return ChatDetailScreen(chatId: chatId);
+                final args = state.extra as ChatDetailScreenArgs;
+
+                return ChatDetailScreen(
+                  chatRoomId: chatRoomId,
+                  profile: args.profile,
+                  chatRoom: args.chatRoom,
+                  isFromChatList: args.isFromChatList,
+                );
               },
             ),
           ],

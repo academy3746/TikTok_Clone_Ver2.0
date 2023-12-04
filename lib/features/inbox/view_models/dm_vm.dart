@@ -8,12 +8,19 @@ import 'package:tiktok/features/inbox/repo/dm_repository.dart';
 class DirectMessageViewModel extends AsyncNotifier<void> {
   late final DirectMessageRepository _repository;
 
+  late final AuthenticationRepository _authRepo;
+
   @override
-  FutureOr build() {
+  FutureOr<void> build() {
     _repository = ref.read(dmRepo);
+
+    _authRepo = ref.read(authRepo);
   }
 
-  Future<void> sendDM(String text) async {
+  Future<void> sendDM({
+    required String text,
+    required String chatRoomId,
+  }) async {
     final user = ref.read(authRepo).user;
 
     state = const AsyncValue.loading();
@@ -26,9 +33,17 @@ class DirectMessageViewModel extends AsyncNotifier<void> {
           datetime: DateTime.now().millisecondsSinceEpoch,
         );
 
-        _repository.sendDM(msg);
+        await _repository.sendDM(
+          message: msg,
+          chatRoomId: chatRoomId,
+          userId: _authRepo.user!.uid,
+        );
       },
     );
+  }
+
+  Future<void> deleteMessage(String chatRoomId, String messageId) async {
+    _repository.deleteMessage(chatRoomId, messageId);
   }
 }
 
@@ -36,12 +51,12 @@ final dmProvider = AsyncNotifierProvider<DirectMessageViewModel, void>(
   () => DirectMessageViewModel(),
 );
 
-final chatProvider = StreamProvider.autoDispose<List<MessageModel>>((ref) {
+final chatProvider = StreamProvider.autoDispose.family<List<MessageModel>, String>((ref, chatRoomId) {
   final db = FirebaseFirestore.instance;
 
   return db
       .collection("chat_rooms")
-      .doc("O8ZTRE9RnjCCSwSe98lk")
+      .doc(chatRoomId)
       .collection("texts")
       .orderBy("datetime")
       .snapshots()

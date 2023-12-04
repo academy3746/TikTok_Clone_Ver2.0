@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok/features/auth/repo/auth_repo.dart';
@@ -76,3 +77,18 @@ class UserViewModel extends AsyncNotifier<UserProfileModel> {
 final userProvider = AsyncNotifierProvider<UserViewModel, UserProfileModel>(
   () => UserViewModel(),
 );
+
+final userListProvider =
+    StreamProvider.autoDispose<List<UserProfileModel>>((ref) {
+  final db = FirebaseFirestore.instance;
+
+  return db.collection("g5_member").orderBy("name").snapshots().map(
+        (event) => event.docs
+            .map(
+              (doc) => UserProfileModel.fromJson(
+                doc.data(),
+              ),
+            )
+            .toList(),
+      );
+});

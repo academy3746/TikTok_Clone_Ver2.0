@@ -5,7 +5,7 @@ import 'package:tiktok/constants/braekpoints.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/settings/settings_screen.dart';
 import 'package:tiktok/features/users/view_models/user_vm.dart';
-import 'package:tiktok/features/users/views/avatar.dart';
+import 'package:tiktok/features/users/widgets/avatar.dart';
 import 'package:tiktok/features/users/widgets/persistent_tab_bar.dart';
 import 'package:tiktok/features/users/widgets/update_profile.dart';
 import '../../../constants/sizes.dart';

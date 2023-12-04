@@ -82,3 +82,15 @@ export const onLikedRemoved = functions.firestore.document("/likes/{likeId}").on
 
     await db.collection("g5_member").doc(userId).collection("likes").doc(videoId).delete();
 });
+
+export const onChatRoomRemoved = functions.firestore.document("chat_rooms/{chatRoomId}").onDelete(async (snapshot, context) => {
+    const db = admin.firestore();
+
+    const [personA, personB] = snapshot.id.split("000");
+
+    const chatRoomId = snapshot.id;
+
+    await db.collection("g5_member").doc(personA).collection("myChatRooms").doc(chatRoomId).delete();
+
+    await db.collection("g5_member").doc(personB).collection("myChatRooms").doc(chatRoomId).delete();
+})
