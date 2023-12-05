@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok/features/videos/repo/video_play_back_config_repo.dart';
 import 'package:tiktok/features/videos/view_models/play_back_config_vm.dart';
+import 'package:tiktok/firebase/fcm_provider.dart';
 import 'package:tiktok/firebase_options.dart';
 import 'package:tiktok/router.dart';
 import 'constants/sizes.dart';
@@ -46,6 +47,8 @@ class TikTokApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(notificationsProvider);
+
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),
       title: 'TikTok Clone',
