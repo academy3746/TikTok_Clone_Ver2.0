@@ -10,6 +10,7 @@ import 'package:tiktok/features/inbox/views/chat_detail_screen.dart';
 import 'package:tiktok/features/inbox/views/chat_screen.dart';
 import 'package:tiktok/features/onboarding/interest_screen.dart';
 import 'package:tiktok/features/videos/views/video_recording_screen.dart';
+import 'package:tiktok/firebase/fcm_provider.dart';
 
 /// For URL Request
 final routerProvider = Provider(
@@ -28,86 +29,95 @@ final routerProvider = Provider(
         return null;
       },
       routes: [
-        GoRoute(
-          name: SignUpScreen.routeName,
-          path: SignUpScreen.routeURL,
-          builder: (BuildContext context, GoRouterState state) =>
-              const SignUpScreen(),
-        ),
-        GoRoute(
-          name: LoginScreen.routeName,
-          path: LoginScreen.routeURL,
-          builder: (BuildContext context, GoRouterState state) =>
-              const LoginScreen(),
-        ),
-        GoRoute(
-          name: InterestScreen.routeName,
-          path: InterestScreen.routeURL,
-          builder: (BuildContext context, GoRouterState state) =>
-              const InterestScreen(),
-        ),
-        GoRoute(
-          path: "/:tab(home|discover|inbox|profile)",
-          name: MainNavigationScreen.routeName,
-          builder: (BuildContext context, GoRouterState state) {
-            final tab = state.params["tab"]!;
+        ShellRoute(
+          builder: (context, state, child) {
+            ref.read(notificationsProvider(context));
 
-            return MainNavigationScreen(tab: tab);
+            return child;
           },
-        ),
-        GoRoute(
-          name: ActivityScreen.routeName,
-          path: ActivityScreen.routeURL,
-          builder: (BuildContext context, GoRouterState state) =>
-              const ActivityScreen(),
-        ),
-        GoRoute(
-          name: ChatScreen.routeName,
-          path: ChatScreen.routeURL,
-          builder: (BuildContext context, GoRouterState state) =>
-              const ChatScreen(),
           routes: [
             GoRoute(
-              name: ChatDetailScreen.routeName,
-              path: ChatDetailScreen.routeURL,
+              name: SignUpScreen.routeName,
+              path: SignUpScreen.routeURL,
+              builder: (BuildContext context, GoRouterState state) =>
+              const SignUpScreen(),
+            ),
+            GoRoute(
+              name: LoginScreen.routeName,
+              path: LoginScreen.routeURL,
+              builder: (BuildContext context, GoRouterState state) =>
+              const LoginScreen(),
+            ),
+            GoRoute(
+              name: InterestScreen.routeName,
+              path: InterestScreen.routeURL,
+              builder: (BuildContext context, GoRouterState state) =>
+              const InterestScreen(),
+            ),
+            GoRoute(
+              path: "/:tab(home|discover|inbox|profile)",
+              name: MainNavigationScreen.routeName,
               builder: (BuildContext context, GoRouterState state) {
-                final chatRoomId = state.params["chatRoomId"]!;
+                final tab = state.params["tab"]!;
 
-                final args = state.extra as ChatDetailScreenArgs;
+                return MainNavigationScreen(tab: tab);
+              },
+            ),
+            GoRoute(
+              name: ActivityScreen.routeName,
+              path: ActivityScreen.routeURL,
+              builder: (BuildContext context, GoRouterState state) =>
+              const ActivityScreen(),
+            ),
+            GoRoute(
+              name: ChatScreen.routeName,
+              path: ChatScreen.routeURL,
+              builder: (BuildContext context, GoRouterState state) =>
+              const ChatScreen(),
+              routes: [
+                GoRoute(
+                  name: ChatDetailScreen.routeName,
+                  path: ChatDetailScreen.routeURL,
+                  builder: (BuildContext context, GoRouterState state) {
+                    final chatRoomId = state.params["chatRoomId"]!;
 
-                return ChatDetailScreen(
-                  chatRoomId: chatRoomId,
-                  profile: args.profile,
-                  chatRoom: args.chatRoom,
-                  isFromChatList: args.isFromChatList,
+                    final args = state.extra as ChatDetailScreenArgs;
+
+                    return ChatDetailScreen(
+                      chatRoomId: chatRoomId,
+                      profile: args.profile,
+                      chatRoom: args.chatRoom,
+                      isFromChatList: args.isFromChatList,
+                    );
+                  },
+                ),
+              ],
+            ),
+            GoRoute(
+              name: VideoRecordingScreen.routeName,
+              path: VideoRecordingScreen.routeURL,
+              pageBuilder: (BuildContext context, GoRouterState state) {
+                return CustomTransitionPage(
+                  transitionDuration: const Duration(milliseconds: 80),
+                  child: const VideoRecordingScreen(),
+                  transitionsBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                      Widget child) {
+                    final position = Tween(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    ).animate(animation);
+
+                    return SlideTransition(
+                      position: position,
+                      child: child,
+                    );
+                  },
                 );
               },
             ),
           ],
-        ),
-        GoRoute(
-          name: VideoRecordingScreen.routeName,
-          path: VideoRecordingScreen.routeURL,
-          pageBuilder: (BuildContext context, GoRouterState state) {
-            return CustomTransitionPage(
-              transitionDuration: const Duration(milliseconds: 80),
-              child: const VideoRecordingScreen(),
-              transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                  Widget child) {
-                final position = Tween(
-                  begin: const Offset(0, 1),
-                  end: Offset.zero,
-                ).animate(animation);
-
-                return SlideTransition(
-                  position: position,
-                  child: child,
-                );
-              },
-            );
-          },
         ),
       ],
     );
