@@ -69,6 +69,28 @@ export const onLikedCreated = functions.firestore.document("/likes/{likeId}").on
     await db.collection("g5_member").doc(userId).collection("likes").doc(videoId).set({
         datetime: Date.now()
     });
+
+    const video = (await db.collection("videos").doc(videoId).get()).data();
+
+    if (video) {
+        const creatorUid = video.creatorUid;
+
+        const user = (await db.collection("g5_member").doc(creatorUid).get()).data();
+
+        if (user) {
+            const token = user.token;
+
+            await admin.messaging().sendToDevice(token, {
+                data: {
+                    "sex": "1234",
+                },
+                notification: {
+                    title: "Someone likes your video!",
+                    body: "LIKES +1 ! Congratulation!",
+                },
+            });
+        }
+    }
 });
 
 export const onLikedRemoved = functions.firestore.document("/likes/{likeId}").onDelete(async (snapshot, context) => {
